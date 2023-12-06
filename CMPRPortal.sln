@@ -1,0 +1,60 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 15
+VisualStudioVersion = 15.0.28307.136
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CMPRPortal.Module", "CMPRPortal.Module\CMPRPortal.Module.csproj", "{F69067F9-B3D1-4606-AD55-F37B7CA56757}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CMPRPortal.Module.Web", "CMPRPortal.Module.Web\CMPRPortal.Module.Web.csproj", "{7A05100B-A9AA-4267-BDA3-F84AE2971F65}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CMPRPortal.Web", "CMPRPortal.Web\CMPRPortal.Web.csproj", "{83C794A8-6212-4149-8D79-10507D39FD9A}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CMPRPortal.Module.Win", "CMPRPortal.Module.Win\CMPRPortal.Module.Win.csproj", "{3031AA1F-E662-48E3-8C39-37E734021F0E}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CMPRPortal.Win", "CMPRPortal.Win\CMPRPortal.Win.csproj", "{F06427EE-07A3-489B-A7E4-5E5B475B97FA}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		EasyTest|Any CPU = EasyTest|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{F69067F9-B3D1-4606-AD55-F37B7CA56757}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F69067F9-B3D1-4606-AD55-F37B7CA56757}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F69067F9-B3D1-4606-AD55-F37B7CA56757}.EasyTest|Any CPU.ActiveCfg = EasyTest|Any CPU
+		{F69067F9-B3D1-4606-AD55-F37B7CA56757}.EasyTest|Any CPU.Build.0 = EasyTest|Any CPU
+		{F69067F9-B3D1-4606-AD55-F37B7CA56757}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F69067F9-B3D1-4606-AD55-F37B7CA56757}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7A05100B-A9AA-4267-BDA3-F84AE2971F65}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7A05100B-A9AA-4267-BDA3-F84AE2971F65}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7A05100B-A9AA-4267-BDA3-F84AE2971F65}.EasyTest|Any CPU.ActiveCfg = EasyTest|Any CPU
+		{7A05100B-A9AA-4267-BDA3-F84AE2971F65}.EasyTest|Any CPU.Build.0 = EasyTest|Any CPU
+		{7A05100B-A9AA-4267-BDA3-F84AE2971F65}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7A05100B-A9AA-4267-BDA3-F84AE2971F65}.Release|Any CPU.Build.0 = Release|Any CPU
+		{83C794A8-6212-4149-8D79-10507D39FD9A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{83C794A8-6212-4149-8D79-10507D39FD9A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{83C794A8-6212-4149-8D79-10507D39FD9A}.EasyTest|Any CPU.ActiveCfg = EasyTest|Any CPU
+		{83C794A8-6212-4149-8D79-10507D39FD9A}.EasyTest|Any CPU.Build.0 = EasyTest|Any CPU
+		{83C794A8-6212-4149-8D79-10507D39FD9A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{83C794A8-6212-4149-8D79-10507D39FD9A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3031AA1F-E662-48E3-8C39-37E734021F0E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3031AA1F-E662-48E3-8C39-37E734021F0E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3031AA1F-E662-48E3-8C39-37E734021F0E}.EasyTest|Any CPU.ActiveCfg = EasyTest|Any CPU
+		{3031AA1F-E662-48E3-8C39-37E734021F0E}.EasyTest|Any CPU.Build.0 = EasyTest|Any CPU
+		{3031AA1F-E662-48E3-8C39-37E734021F0E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3031AA1F-E662-48E3-8C39-37E734021F0E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F06427EE-07A3-489B-A7E4-5E5B475B97FA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F06427EE-07A3-489B-A7E4-5E5B475B97FA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F06427EE-07A3-489B-A7E4-5E5B475B97FA}.EasyTest|Any CPU.ActiveCfg = EasyTest|Any CPU
+		{F06427EE-07A3-489B-A7E4-5E5B475B97FA}.EasyTest|Any CPU.Build.0 = EasyTest|Any CPU
+		{F06427EE-07A3-489B-A7E4-5E5B475B97FA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F06427EE-07A3-489B-A7E4-5E5B475B97FA}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {14AA1EE4-AD1A-4847-AE23-B640945287F7}
+	EndGlobalSection
+EndGlobal
