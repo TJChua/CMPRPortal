@@ -64,6 +64,18 @@ namespace CMPRPortal.Module.BusinessObjects.Maintenance
             }
         }
 
+        private string _CompanyName;
+        [XafDisplayName("Company Name")]
+        [Index(5)]
+        public string CompanyName
+        {
+            get { return _CompanyName; }
+            set
+            {
+                SetPropertyValue("CompanyName", ref _CompanyName, value);
+            }
+        }
+
         private bool _IsActive;
         [XafDisplayName("Active")]
         [Index(30)]

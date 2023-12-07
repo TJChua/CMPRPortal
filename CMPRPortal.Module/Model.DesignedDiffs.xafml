@@ -4,6 +4,9 @@
     <Items>
       <Item Id="Default">
         <Items>
+          <Item Id="PurchaseOrderAttachment_ListView" Removed="True" />
+          <Item Id="PurchaseOrderDetails_ListView" Removed="True" />
+          <Item Id="PurchaseOrderDocTrail_ListView" Removed="True" />
           <Item Id="PurchaseRequestAppStage_ListView" Removed="True" />
           <Item Id="PurchaseRequestAppStatus_ListView" Removed="True" />
           <Item Id="PurchaseRequestAttachment_ListView" Removed="True" />
@@ -20,6 +23,125 @@
     <SchemaModule Name="SystemModule" Version="20.2.5.0" IsNewNode="True" />
   </SchemaModules>
   <Views>
+    <DetailView Id="PurchaseOrderDetails_DetailView">
+      <Layout>
+        <LayoutGroup Id="Main" RelativeSize="100">
+          <LayoutGroup Id="SimpleEditors" Direction="Horizontal" RelativeSize="100">
+            <LayoutGroup Id="PurchaseOrderDetails_col1" ShowCaption="False" Index="0" RelativeSize="50" IsNewNode="True">
+              <LayoutItem Id="ItemCode" ViewItem="ItemCode" Index="0" RelativeSize="7.4534161490683228" IsNewNode="True" />
+              <LayoutItem Id="ItemDesc" ViewItem="ItemDesc" Index="1" RelativeSize="5.383022774327122" IsNewNode="True" />
+              <LayoutItem Id="UOM" ViewItem="UOM" Index="2" RelativeSize="5.383022774327122" IsNewNode="True" />
+              <LayoutItem Id="Quantity" ViewItem="Quantity" Index="3" RelativeSize="5.383022774327122" IsNewNode="True" />
+              <LayoutItem Id="UnitPrice" ViewItem="UnitPrice" Index="4" RelativeSize="5.383022774327122" IsNewNode="True" />
+              <LayoutItem Id="EventDate" ViewItem="EventDate" Index="5" RelativeSize="5.383022774327122" IsNewNode="True" />
+              <LayoutItem Id="BanquetOrderNo" ViewItem="BanquetOrderNo" Index="6" RelativeSize="5.383022774327122" IsNewNode="True" />
+              <LayoutItem Id="Remarks" ViewItem="Remarks" Index="7" RelativeSize="60.248447204968947" IsNewNode="True" />
+            </LayoutGroup>
+            <LayoutGroup Id="PurchaseOrderDetails_col2" ShowCaption="False" Index="1" RelativeSize="50" IsNewNode="True">
+              <LayoutItem Id="FOC" ViewItem="FOC" Index="0" RelativeSize="7.4534161490683228" IsNewNode="True" />
+              <LayoutItem Id="Discount" ViewItem="Discount" Index="1" RelativeSize="5.383022774327122" IsNewNode="True" />
+              <LayoutItem Id="Tax" ViewItem="Tax" Index="2" RelativeSize="5.383022774327122" IsNewNode="True" />
+              <LayoutItem Id="TaxAmount" ViewItem="TaxAmount" Index="3" RelativeSize="5.383022774327122" IsNewNode="True" />
+              <LayoutItem Id="LineTotalWithoutDiscount" ViewItem="LineTotalWithoutDiscount" Index="4" RelativeSize="5.383022774327122" IsNewNode="True" />
+              <LayoutItem Id="LineTotal" ViewItem="LineTotal" Index="5" RelativeSize="71.014492753623188" IsNewNode="True" />
+            </LayoutGroup>
+            <LayoutGroup Id="PurchaseOrderDetails" Removed="True" />
+          </LayoutGroup>
+        </LayoutGroup>
+      </Layout>
+    </DetailView>
+    <DetailView Id="PurchaseOrders_DetailView">
+      <Items>
+        <PropertyEditor Id="Remarks" RowCount="3" />
+      </Items>
+      <Layout>
+        <LayoutGroup Id="Main" RelativeSize="100">
+          <LayoutGroup Id="SimpleEditors" RelativeSize="30.641821946169774" Direction="Horizontal">
+            <LayoutGroup Id="PurchaseOrders_col1" ShowCaption="False" Direction="Horizontal" Index="0" RelativeSize="64.071038251366119" IsNewNode="True">
+              <LayoutGroup Id="Autof873283f-bde4-4796-9414-17cdfffd81c4" ShowCaption="False" Caption="Autof873283f-bde4-4796-9414-17cdfffd81c4(5)" Index="0" RelativeSize="50.319829424307038" IsNewNode="True">
+                <LayoutItem Id="UserID" ViewItem="UserID" Index="0" RelativeSize="24.324324324324323" IsNewNode="True" />
+                <LayoutItem Id="UserName" ViewItem="UserName" Index="1" RelativeSize="17.567567567567568" IsNewNode="True" />
+                <LayoutItem Id="Entity" ViewItem="Entity" Index="2" RelativeSize="17.567567567567568" IsNewNode="True" />
+                <LayoutItem Id="Department" ViewItem="Department" Index="3" RelativeSize="40.54054054054054" IsNewNode="True" />
+              </LayoutGroup>
+              <LayoutGroup Id="Auto872c7210-ea7e-42ee-8fb1-8a4d66533a98" ShowCaption="False" Caption="Auto872c7210-ea7e-42ee-8fb1-8a4d66533a98(10)" Index="1" RelativeSize="49.680170575692962" IsNewNode="True">
+                <LayoutItem Id="Supplier" ViewItem="Supplier" Index="0" RelativeSize="24.324324324324323" IsNewNode="True" />
+                <LayoutItem Id="SupplierName" ViewItem="SupplierName" Index="1" RelativeSize="17.567567567567568" IsNewNode="True" />
+                <LayoutItem Id="SupplierAddress" ViewItem="SupplierAddress" Index="2" RelativeSize="58.108108108108105" IsNewNode="True" />
+              </LayoutGroup>
+            </LayoutGroup>
+            <LayoutGroup Id="PurchaseOrders_col2" ShowCaption="False" Index="1" RelativeSize="35.928961748633881" IsNewNode="True">
+              <LayoutItem Id="DocNum" ViewItem="DocNum" Index="0" RelativeSize="24.324324324324323" IsNewNode="True" />
+              <LayoutItem Id="DocDate" ViewItem="DocDate" Index="1" RelativeSize="17.567567567567568" IsNewNode="True" />
+              <LayoutItem Id="ExpectedDeliveryDate" ViewItem="ExpectedDeliveryDate" Index="2" RelativeSize="17.567567567567568" IsNewNode="True" />
+              <LayoutItem Id="Status" ViewItem="Status" Index="3" RelativeSize="17.567567567567568" IsNewNode="True" />
+              <LayoutItem Id="PaymentTerm" ViewItem="PaymentTerm" Index="4" RelativeSize="22.972972972972972" IsNewNode="True" />
+            </LayoutGroup>
+            <LayoutGroup Id="PurchaseOrders" RelativeSize="100" Removed="True">
+              <LayoutGroup Id="PurchaseOrders_col1" RelativeSize="64.1643059490085" Caption="PurchaseOrders_col1" Direction="Horizontal">
+                <LayoutGroup Id="Autof873283f-bde4-4796-9414-17cdfffd81c4" ShowCaption="False" Caption="" Index="0" RelativeSize="50.331125827814567" IsNewNode="True">
+                  <LayoutItem Id="UserID" ViewItem="UserID" Index="0" RelativeSize="24" IsNewNode="True" />
+                  <LayoutItem Id="UserName" ViewItem="UserName" Index="1" RelativeSize="17.333333333333332" IsNewNode="True" />
+                  <LayoutItem Id="Entity" ViewItem="Entity" Index="2" RelativeSize="17.333333333333332" IsNewNode="True" />
+                  <LayoutItem Id="Department" ViewItem="Department" Index="3" RelativeSize="41.333333333333336" IsNewNode="True" />
+                </LayoutGroup>
+                <LayoutItem Id="UserID" Index="0" RelativeSize="12.857142857142858" Removed="True" />
+                <LayoutGroup Id="Auto872c7210-ea7e-42ee-8fb1-8a4d66533a98" ShowCaption="False" Caption="" Index="1" RelativeSize="49.668874172185433" IsNewNode="True">
+                  <LayoutItem Id="Supplier" ViewItem="Supplier" Index="0" RelativeSize="24" IsNewNode="True" />
+                  <LayoutItem Id="SupplierName" ViewItem="SupplierName" Index="1" RelativeSize="17.333333333333332" IsNewNode="True" />
+                  <LayoutItem Id="SupplierAddress" ViewItem="SupplierAddress" Index="2" RelativeSize="58.666666666666664" IsNewNode="True" />
+                </LayoutGroup>
+                <LayoutItem Id="Supplier" Index="1" RelativeSize="49.308755760368662" Removed="True" />
+                <LayoutItem Id="UserName" Index="1" RelativeSize="9.2857142857142865" Removed="True" />
+                <LayoutItem Id="SupplierName" Index="3" RelativeSize="9.2857142857142865" Removed="True" />
+                <LayoutItem Id="Entity" Index="4" RelativeSize="9.2857142857142865" Removed="True" />
+                <LayoutItem Id="SupplierAddress" Index="5" RelativeSize="9.2857142857142865" Removed="True" />
+                <LayoutItem Id="Department" Index="6" RelativeSize="9.2857142857142865" Removed="True" />
+                <LayoutItem Id="PaymentTerm" Index="7" RelativeSize="31.428571428571427" Removed="True" />
+                <LayoutItem Id="DocNum" Removed="True" />
+              </LayoutGroup>
+              <LayoutGroup Id="PurchaseOrders_col2" RelativeSize="35.8356940509915">
+                <LayoutItem Id="DocNum" ViewItem="DocNum" Index="0" RelativeSize="24" IsNewNode="True" />
+                <LayoutItem Id="DocDate" Index="1" RelativeSize="17.333333333333332" />
+                <LayoutItem Id="ExpectedDeliveryDate" Index="2" RelativeSize="17.333333333333332" />
+                <LayoutItem Id="Status" Index="3" RelativeSize="17.333333333333332" />
+                <LayoutItem Id="Discount" Index="4" RelativeSize="11.403508771929825" Removed="True" />
+                <LayoutItem Id="GrandTotal" Index="4" RelativeSize="14.772727272727273" Removed="True" />
+                <LayoutItem Id="PaymentTerm" ViewItem="PaymentTerm" Index="4" RelativeSize="24" IsNewNode="True" />
+                <LayoutItem Id="Remarks" Index="4" RelativeSize="8.49673202614379" Removed="True" />
+                <LayoutItem Id="TaxAmount" Index="4" RelativeSize="12.871287128712872" Removed="True" />
+                <LayoutItem Id="Total" Index="4" RelativeSize="10.077519379844961" Removed="True" />
+                <LayoutItem Id="Currency" Index="8" RelativeSize="9.2857142857142865" Removed="True" />
+              </LayoutGroup>
+            </LayoutGroup>
+          </LayoutGroup>
+          <TabbedGroup Id="Tabs" RelativeSize="44.099378881987576">
+            <LayoutGroup Id="PurchaseOrderDetails" RelativeSize="100">
+              <LayoutItem Id="PurchaseOrderDetails" RelativeSize="100" />
+            </LayoutGroup>
+            <LayoutGroup Id="PurchaseOrderDocTrail" RelativeSize="100">
+              <LayoutItem Id="PurchaseOrderDocTrail" RelativeSize="100" />
+            </LayoutGroup>
+            <LayoutGroup Id="PurchaseOrderAttachment" RelativeSize="100">
+              <LayoutItem Id="PurchaseOrderAttachment" RelativeSize="100" />
+            </LayoutGroup>
+            <LayoutGroup Id="AuditTrail" RelativeSize="100">
+              <LayoutItem Id="AuditTrail" RelativeSize="100" />
+            </LayoutGroup>
+          </TabbedGroup>
+          <LayoutGroup Id="Auto9a91c3fb-0c12-4b91-b4f8-1feee44202eb" ShowCaption="False" Caption="Auto9a91c3fb-0c12-4b91-b4f8-1feee44202eb(29)" Direction="Horizontal" Index="2" RelativeSize="25.25879917184265" IsNewNode="True">
+            <LayoutItem Id="Remarks" ViewItem="Remarks" Index="0" RelativeSize="40.7103825136612" IsNewNode="True" />
+            <LayoutItem Id="Currency" ViewItem="Currency" Index="1" RelativeSize="29.234972677595628" IsNewNode="True" />
+            <LayoutGroup Id="Auto2635a24e-46a9-4f19-8039-f412c6c15bb1" ShowCaption="False" Caption="Auto2635a24e-46a9-4f19-8039-f412c6c15bb1(32)" Index="2" RelativeSize="30.05464480874317" IsNewNode="True">
+              <LayoutItem Id="Total" ViewItem="Total" Index="0" RelativeSize="27.868852459016395" IsNewNode="True" />
+              <LayoutItem Id="Discount" ViewItem="Discount" Index="1" RelativeSize="21.311475409836067" IsNewNode="True" />
+              <LayoutItem Id="TaxAmount" ViewItem="TaxAmount" Index="2" RelativeSize="21.311475409836067" IsNewNode="True" />
+              <LayoutItem Id="GrandTotal" ViewItem="GrandTotal" Index="3" RelativeSize="29.508196721311474" IsNewNode="True" />
+            </LayoutGroup>
+          </LayoutGroup>
+        </LayoutGroup>
+      </Layout>
+    </DetailView>
     <DetailView Id="PurchaseRequestDetails_DetailView">
       <Layout>
         <LayoutGroup Id="Main" RelativeSize="100">

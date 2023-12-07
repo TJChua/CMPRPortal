@@ -12,19 +12,18 @@ using DevExpress.ExpressApp.Model;
 using DevExpress.Persistent.BaseImpl;
 using DevExpress.Persistent.Validation;
 using DevExpress.ExpressApp.ConditionalAppearance;
-using CMPRPortal.Module.BusinessObjects.Setup;
 using CMPRPortal.Module.BusinessObjects.View;
 using CMPRPortal.Module.BusinessObjects.Maintenance;
 
-namespace CMPRPortal.Module.BusinessObjects.PR
+namespace CMPRPortal.Module.BusinessObjects.PO
 {
     [DefaultClassOptions]
-    [XafDisplayName("Purchase Request")]
-    [NavigationItem("Purchase Request")]
+    [XafDisplayName("Purchase Order")]
+    [NavigationItem("Purchase Order")]
 
-    public class PurchaseRequests : XPObject
+    public class PurchaseOrders : XPObject
     { // Inherit from a different class to provide a custom primary key, concurrency and deletion behavior, etc. (https://documentation.devexpress.com/eXpressAppFramework/CustomDocument113146.aspx).
-        public PurchaseRequests(Session session)
+        public PurchaseOrders(Session session)
             : base(session)
         {
         }
@@ -50,11 +49,9 @@ namespace CMPRPortal.Module.BusinessObjects.PR
             CreateDate = DateTime.Now;
             DocDate = DateTime.Now;
             ExpectedDeliveryDate = DateTime.Now;
-            EventDate = DateTime.Now;
 
-            DocType = DocTypeList.PR;
+            DocType = DocTypeList.PO;
             Status = DocStatus.Draft;
-            AppStatus = ApprovalStatusType.Not_Applicable;
         }
 
         private SystemUsers _CreateUser;
@@ -190,6 +187,81 @@ namespace CMPRPortal.Module.BusinessObjects.PR
             }
         }
 
+        private vwBusinessPartner _Supplier;
+        [XafDisplayName("Supplier")]
+        [NoForeignKey]
+        [ImmediatePostData]
+        [LookupEditorMode(LookupEditorMode.AllItems)]
+        [DataSourceCriteria("ValidFor = 'Y' and EntityCompany = '@this.Entity.CompanyName'")]
+        [Index(5), VisibleInDetailView(true), VisibleInListView(true), VisibleInLookupListView(false)]
+        public vwBusinessPartner Supplier
+        {
+            get { return _Supplier; }
+            set
+            {
+                SetPropertyValue("Supplier", ref _Supplier, value);
+                if (!IsLoading && value != null)
+                {
+                    SupplierName = Supplier.BoName;
+                    SupplierAddress = Supplier.Address;
+                    if (Supplier.PaymentTerm != null)
+                    {
+                        PaymentTerm = Session.FindObject<vwPaymentTerm>(CriteriaOperator.Parse("GroupNum = ? and EntityCompany = ?", 
+                            Supplier.PaymentTerm.GroupNum, Entity.CompanyName));
+                    }
+                    Currency = Supplier.Currency;
+                }
+                else if (!IsLoading && value == null)
+                {
+                    SupplierName = null;
+                    SupplierAddress = null;
+                    PaymentTerm = null;
+                    Currency = null;
+                }
+            }
+        }
+
+        private string _SupplierName;
+        [XafDisplayName("Supplier Name")]
+        [Appearance("SupplierName", Enabled = false)]
+        [Index(8), VisibleInDetailView(true), VisibleInListView(true), VisibleInLookupListView(false)]
+        public string SupplierName
+        {
+            get { return _SupplierName; }
+            set
+            {
+                SetPropertyValue("SupplierName", ref _SupplierName, value);
+            }
+        }
+
+        private string _SupplierAddress;
+        [XafDisplayName("Supplier Address")]
+        [Appearance("SupplierAddress", Enabled = false)]
+        [Index(8), VisibleInDetailView(true), VisibleInListView(true), VisibleInLookupListView(false)]
+        public string SupplierAddress
+        {
+            get { return _SupplierAddress; }
+            set
+            {
+                SetPropertyValue("SupplierAddress", ref _SupplierAddress, value);
+            }
+        }
+
+        private string _Currency;
+        [ImmediatePostData]
+        [NoForeignKey]
+        [XafDisplayName("Currency")]
+        [Index(33), VisibleInListView(true), VisibleInDetailView(true), VisibleInLookupListView(true)]
+        [Appearance("Currency", Enabled = false)]
+        public string Currency
+        {
+            get { return _Currency; }
+            set
+            {
+                SetPropertyValue("Currency", ref _Currency, value);
+            }
+        }
+
         private DateTime _DocDate;
         [XafDisplayName("Document Date")]
         [Index(13), VisibleInDetailView(true), VisibleInListView(true), VisibleInLookupListView(false)]
@@ -214,15 +286,19 @@ namespace CMPRPortal.Module.BusinessObjects.PR
             }
         }
 
-        private DateTime _EventDate;
-        [XafDisplayName("Event Date")]
-        [Index(18), VisibleInDetailView(true), VisibleInListView(true), VisibleInLookupListView(false)]
-        public DateTime EventDate
+        private vwPaymentTerm _PaymentTerm;
+        [NoForeignKey]
+        [LookupEditorMode(LookupEditorMode.AllItems)]
+        [XafDisplayName("Payment Term")]
+        [DataSourceCriteria("EntityCompany = '@this.Entity.CompanyName'")]
+        [Appearance("PaymentTerm", Enabled = false)]
+        [Index(13), VisibleInDetailView(true), VisibleInListView(false), VisibleInLookupListView(false)]
+        public vwPaymentTerm PaymentTerm
         {
-            get { return _EventDate; }
+            get { return _PaymentTerm; }
             set
             {
-                SetPropertyValue("EventDate", ref _EventDate, value);
+                SetPropertyValue("PaymentTerm", ref _PaymentTerm, value);
             }
         }
 
@@ -239,29 +315,130 @@ namespace CMPRPortal.Module.BusinessObjects.PR
             }
         }
 
-        private ApprovalStatusType _AppStatus;
-        [XafDisplayName("Approval Status")]
-        [Appearance("AppStatus", Enabled = false)]
-        [Index(23), VisibleInDetailView(true), VisibleInListView(true), VisibleInLookupListView(false)]
-        public ApprovalStatusType AppStatus
+        private decimal _SubTotal;
+        [XafDisplayName("SubTotal")]
+        [Appearance("SubTotal", Enabled = false)]
+        [DbType("numeric(18,6)")]
+        [ModelDefault("DisplayFormat", "{0:n2}")]
+        [Index(30), VisibleInDetailView(true), VisibleInListView(false), VisibleInLookupListView(false)]
+        public decimal Total
         {
-            get { return _AppStatus; }
+            get
+            {
+                if (Session.IsObjectsSaving != true)
+                {
+                    decimal rtn = 0;
+                    if (PurchaseOrderDetails != null)
+                        rtn += PurchaseOrderDetails.Sum(p => p.LineTotalWithoutDiscount);
+
+                    return rtn;
+                }
+                else
+                {
+                    return _SubTotal;
+                }
+            }
             set
             {
-                SetPropertyValue("AppStatus", ref _AppStatus, value);
+                SetPropertyValue("SubTotal", ref _SubTotal, value);
             }
         }
 
-        private string _BanquetOrderNo;
-        [XafDisplayName("Banquet Order No")]
-        [Appearance("BanquetOrderNo", Enabled = false)]
-        [Index(25), VisibleInDetailView(true), VisibleInListView(true), VisibleInLookupListView(false)]
-        public string BanquetOrderNo
+        private decimal _Discount;
+        [XafDisplayName("Discount")]
+        [Appearance("Discount", Enabled = false)]
+        [DbType("numeric(18,6)")]
+        [ModelDefault("DisplayFormat", "{0:n2}")]
+        [Index(30), VisibleInDetailView(true), VisibleInListView(false), VisibleInLookupListView(false)]
+        public decimal Discount
         {
-            get { return _BanquetOrderNo; }
+            get
+            {
+                if (Session.IsObjectsSaving != true)
+                {
+                    decimal sub = 0;
+                    if (PurchaseOrderDetails != null)
+                        sub += PurchaseOrderDetails.Sum(p => p.LineTotalWithoutDiscount);
+
+                    decimal grand = 0;
+                    if (PurchaseOrderDetails != null)
+                        grand += PurchaseOrderDetails.Sum(p => p.LineTotal);
+
+                    if (sub == 0)
+                    {
+                        return 0;
+                    }
+                    else
+                    {
+                        return ((sub - grand) / sub) * 100;
+                    }
+                }
+                else
+                {
+                    return _Discount;
+                }
+            }
             set
             {
-                SetPropertyValue("BanquetOrderNo", ref _BanquetOrderNo, value);
+                SetPropertyValue("Discount", ref _Discount, value);
+            }
+        }
+
+        private decimal _TaxAmount;
+        [XafDisplayName("Tax Amount")]
+        [Appearance("TaxAmount", Enabled = false)]
+        [DbType("numeric(18,6)")]
+        [ModelDefault("DisplayFormat", "{0:n2}")]
+        [Index(30), VisibleInDetailView(true), VisibleInListView(false), VisibleInLookupListView(false)]
+        public decimal TaxAmount
+        {
+            get
+            {
+                if (Session.IsObjectsSaving != true)
+                {
+                    decimal rtn = 0;
+                    if (PurchaseOrderDetails != null)
+                        rtn += PurchaseOrderDetails.Sum(p => p.TaxAmount);
+
+                    return rtn;
+                }
+                else
+                {
+                    return _TaxAmount;
+                }
+            }
+            set
+            {
+                SetPropertyValue("TaxAmount", ref _TaxAmount, value);
+            }
+        }
+
+        private decimal _GrandTotal;
+        [XafDisplayName("Grand Total")]
+        [Appearance("GrandTotal", Enabled = false)]
+        [DbType("numeric(18,6)")]
+        [ModelDefault("DisplayFormat", "{0:n2}")]
+        [Index(30), VisibleInDetailView(true), VisibleInListView(false), VisibleInLookupListView(false)]
+        public decimal GrandTotal
+        {
+            get
+            {
+                if (Session.IsObjectsSaving != true)
+                {
+                    decimal rtn = 0;
+                    if (PurchaseOrderDetails != null)
+                        rtn += PurchaseOrderDetails.Sum(p => p.LineTotal);
+
+                    return rtn;
+                }
+                else
+                {
+                    return _GrandTotal;
+                }
+            }
+            set
+            {
+                SetPropertyValue("GrandTotal", ref _GrandTotal, value);
             }
         }
 
@@ -285,39 +462,25 @@ namespace CMPRPortal.Module.BusinessObjects.PR
             { return Session.IsNewObject(this); }
         }
 
-        [Association("PurchaseRequests-PurchaseRequestDetails")]
+        [Association("PurchaseOrders-PurchaseOrderDetails")]
         [XafDisplayName("Items")]
-        public XPCollection<PurchaseRequestDetails> PurchaseRequestDetails
+        public XPCollection<PurchaseOrderDetails> PurchaseOrderDetails
         {
-            get { return GetCollection<PurchaseRequestDetails>("PurchaseRequestDetails"); }
+            get { return GetCollection<PurchaseOrderDetails>("PurchaseOrderDetails"); }
         }
 
-        [Association("PurchaseRequests-PurchaseRequestDocTrail")]
+        [Association("PurchaseOrders-PurchaseOrderDocTrail")]
         [XafDisplayName("Status History")]
-        public XPCollection<PurchaseRequestDocTrail> PurchaseRequestDocTrail
+        public XPCollection<PurchaseOrderDocTrail> PurchaseOrderDocTrail
         {
-            get { return GetCollection<PurchaseRequestDocTrail>("PurchaseRequestDocTrail"); }
+            get { return GetCollection<PurchaseOrderDocTrail>("PurchaseOrderDocTrail"); }
         }
 
-        [Association("PurchaseRequests-PurchaseRequestAppStage")]
-        [XafDisplayName("Approval Stage")]
-        public XPCollection<PurchaseRequestAppStage> PurchaseRequestAppStage
-        {
-            get { return GetCollection<PurchaseRequestAppStage>("PurchaseRequestAppStage"); }
-        }
-
-        [Association("PurchaseRequests-PurchaseRequestAppStatus")]
-        [XafDisplayName("Approval Status")]
-        public XPCollection<PurchaseRequestAppStatus> PurchaseRequestAppStatus
-        {
-            get { return GetCollection<PurchaseRequestAppStatus>("PurchaseRequestAppStatus"); }
-        }
-
-        [Association("PurchaseRequests-PurchaseRequestAttachment")]
+        [Association("PurchaseOrders-PurchaseOrderAttachment")]
         [XafDisplayName("Attachment")]
-        public XPCollection<PurchaseRequestAttachment> PurchaseRequestAttachment
+        public XPCollection<PurchaseOrderAttachment> PurchaseOrderAttachment
         {
-            get { return GetCollection<PurchaseRequestAttachment>("PurchaseRequestAttachment"); }
+            get { return GetCollection<PurchaseOrderAttachment>("PurchaseOrderAttachment"); }
         }
 
         private XPCollection<AuditDataItemPersistent> auditTrail;
@@ -350,7 +513,7 @@ namespace CMPRPortal.Module.BusinessObjects.PR
 
                 if (Session.IsNewObject(this))
                 {
-                    PurchaseRequestDocTrail ds = new PurchaseRequestDocTrail(Session);
+                    PurchaseOrderDocTrail ds = new PurchaseOrderDocTrail(Session);
                     ds.DocStatus = DocStatus.Draft;
                     ds.DocRemarks = "";
                     if (user != null)
@@ -360,7 +523,7 @@ namespace CMPRPortal.Module.BusinessObjects.PR
                     }
                     ds.CreateDate = DateTime.Now;
                     ds.UpdateDate = DateTime.Now;
-                    this.PurchaseRequestDocTrail.Add(ds);
+                    this.PurchaseOrderDocTrail.Add(ds);
                 }
             }
         }

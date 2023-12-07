@@ -48,6 +48,7 @@ namespace CMPRPortal.Module.BusinessObjects {
         private vwDepartment _DefaultDept;
         [NoForeignKey]
         [LookupEditorMode(LookupEditorMode.AllItems)]
+        [DataSourceCriteria("EntityCompany = '@this.Entity.CompanyName'")]
         [XafDisplayName("Default Department")]
         [RuleRequiredField(DefaultContexts.Save)]
         public vwDepartment DefaultDept

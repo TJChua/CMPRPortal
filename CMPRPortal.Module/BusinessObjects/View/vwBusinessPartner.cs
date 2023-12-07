@@ -82,7 +82,6 @@ namespace CMPRPortal.Module.BusinessObjects.View
             get; set;
         }
 
-
         [XafDisplayName("validFrom")]
         [Appearance("validFrom", Enabled = false)]
         [Index(13)]
@@ -95,6 +94,23 @@ namespace CMPRPortal.Module.BusinessObjects.View
         [Appearance("validTo", Enabled = false)]
         [Index(15)]
         public DateTime validTo
+        {
+            get; set;
+        }
+
+        [XafDisplayName("PaymentTerm")]
+        [NoForeignKey]
+        [Appearance("PaymentTerm", Enabled = false)]
+        [Index(18)]
+        public vwPaymentTerm PaymentTerm
+        {
+            get; set;
+        }
+
+        [XafDisplayName("EntityCompany")]
+        [Appearance("EntityCompany", Enabled = false)]
+        [Index(20)]
+        public string EntityCompany
         {
             get; set;
         }

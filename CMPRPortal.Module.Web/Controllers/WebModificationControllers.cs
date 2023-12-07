@@ -2,6 +2,9 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using CMPRPortal.Module.BusinessObjects;
+using CMPRPortal.Module.BusinessObjects.PO;
+using CMPRPortal.Module.BusinessObjects.PR;
 using CMPRPortal.Module.Controllers;
 using DevExpress.Data.Filtering;
 using DevExpress.ExpressApp;
@@ -49,10 +52,43 @@ namespace CMPRPortal.Module.Web.Controllers
 
         protected override void Save(SimpleActionExecuteEventArgs args)
         {
-            base.Save(args);
-            ((DetailView)View).ViewEditMode = ViewEditMode.View;
-            View.BreakLinksToControls();
-            View.CreateControls();
+            if (View.ObjectTypeInfo.Type == typeof(PurchaseRequests))
+            {
+                PurchaseRequests CurrObject = (PurchaseRequests)args.CurrentObject;
+
+                base.Save(args);
+                if (CurrObject.DocNum == null)
+                {
+                    CurrObject.DocNum = genCon.GenerateDocNum(DocTypeList.PR, ObjectSpace, CurrObject.Entity);
+                }
+
+                base.Save(args);
+                ((DetailView)View).ViewEditMode = ViewEditMode.View;
+                View.BreakLinksToControls();
+                View.CreateControls();
+            }
+            else if (View.ObjectTypeInfo.Type == typeof(PurchaseOrders))
+            {
+                PurchaseOrders CurrObject = (PurchaseOrders)args.CurrentObject;
+
+                base.Save(args);
+                if (CurrObject.DocNum == null)
+                {
+                    CurrObject.DocNum = genCon.GenerateDocNum(DocTypeList.PO, ObjectSpace, CurrObject.Entity);
+                }
+
+                base.Save(args);
+                ((DetailView)View).ViewEditMode = ViewEditMode.View;
+                View.BreakLinksToControls();
+                View.CreateControls();
+            }
+            else
+            {
+                base.Save(args);
+                ((DetailView)View).ViewEditMode = ViewEditMode.View;
+                View.BreakLinksToControls();
+                View.CreateControls();
+            }
         }
     }
 }

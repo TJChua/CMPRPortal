@@ -17,8 +17,8 @@ namespace CMPRPortal.Module.BusinessObjects.View
 {
     [DefaultClassOptions]
     [NavigationItem("SAP")]
-    [XafDisplayName("Item Masters")]
-    [DefaultProperty("BoFullName")]
+    [XafDisplayName("Payment Term")]
+    [DefaultProperty("PymntGroup")]
     [Appearance("HideNew", AppearanceItemType.Action, "True", TargetItems = "New", Visibility = DevExpress.ExpressApp.Editors.ViewItemVisibility.Hide, Context = "Any")]
     [Appearance("HideEdit", AppearanceItemType.Action, "True", TargetItems = "SwitchToEditMode; Edit", Visibility = DevExpress.ExpressApp.Editors.ViewItemVisibility.Hide, Context = "Any")]
     [Appearance("HideDelete", AppearanceItemType.Action, "True", TargetItems = "Delete", Visibility = DevExpress.ExpressApp.Editors.ViewItemVisibility.Hide, Context = "Any")]
@@ -29,9 +29,9 @@ namespace CMPRPortal.Module.BusinessObjects.View
     //[Appearance("HideExport", AppearanceItemType.Action, "True", TargetItems = "Export", Visibility = DevExpress.ExpressApp.Editors.ViewItemVisibility.Hide, Context = "Any")]
     [Appearance("HideRefresh", AppearanceItemType.Action, "True", TargetItems = "Refresh", Visibility = DevExpress.ExpressApp.Editors.ViewItemVisibility.Hide, Context = "Any")]
 
-    public class vwItemMasters : XPLiteObject
+    public class vwPaymentTerm : XPLiteObject
     { // Inherit from a different class to provide a custom primary key, concurrency and deletion behavior, etc. (https://documentation.devexpress.com/eXpressAppFramework/CustomDocument113146.aspx).
-        public vwItemMasters(Session session)
+        public vwPaymentTerm(Session session)
             : base(session)
         {
         }
@@ -43,89 +43,28 @@ namespace CMPRPortal.Module.BusinessObjects.View
 
         [Key]
         [Browsable(true)]
-        [XafDisplayName("Item Code")]
-        [Appearance("ItemCode", Enabled = false)]
-        [Index(0), VisibleInDetailView(true), VisibleInListView(true), VisibleInLookupListView(true)]
-        public string ItemCode
+        [XafDisplayName("GroupNum")]
+        [Appearance("GroupNum", Enabled = false)]
+        [Index(0)]
+        public string GroupNum
         {
             get; set;
         }
 
-        [XafDisplayName("Item Name")]
-        [Appearance("ItemName", Enabled = false)]
-        [Index(3), VisibleInDetailView(true), VisibleInListView(true), VisibleInLookupListView(true)]
-        public string ItemName
-        {
-            get; set;
-        }
-
-        [XafDisplayName("UOM Group")]
-        [Appearance("UOM", Enabled = false)]
-        [Index(5)]
-        public string UOM
-        {
-            get; set;
-        }
-
-        [XafDisplayName("ManBtchNum")]
-        [Appearance("ManBtchNum", Enabled = false)]
-        [Index(8)]
-        public string ManBtchNum
-        {
-            get; set;
-        }
-
-        [XafDisplayName("ManSerNum")]
-        [Appearance("ManSerNum", Enabled = false)]
-        [Index(10)]
-        public string ManSerNum
-        {
-            get; set;
-        }
-
-        [XafDisplayName("PrchseItem")]
-        [Appearance("PrchseItem", Enabled = false)]
-        [Index(13)]
-        public string PrchseItem
-        {
-            get; set;
-        }
-        [XafDisplayName("InvntItem")]
-        [Appearance("InvntItem", Enabled = false)]
-        [Index(15)]
-        public string InvntItem
-        {
-            get; set;
-        }
-
-        [XafDisplayName("SellItem")]
-        [Appearance("SellItem", Enabled = false)]
-        [Index(18)]
-        public string SellItem
-        {
-            get; set;
-        }
-
-        [XafDisplayName("frozenFor")]
-        [Appearance("frozenFor", Enabled = false)]
-        [Index(20)]
-        public string frozenFor
+        [XafDisplayName("PymntGroup")]
+        [Appearance("PymntGroup", Enabled = false)]
+        [Index(3)]
+        public string PymntGroup
         {
             get; set;
         }
 
         [XafDisplayName("EntityCompany")]
         [Appearance("EntityCompany", Enabled = false)]
-        [Index(23)]
+        [Index(5)]
         public string EntityCompany
         {
             get; set;
-        }
-
-        [Index(50), VisibleInDetailView(false), VisibleInListView(false), VisibleInLookupListView(true)]
-        public string BoFullName
-        {
-            get { return ItemCode + "-" + ItemName; }
         }
     }
 }

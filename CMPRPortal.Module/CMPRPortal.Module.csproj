@@ -111,10 +111,22 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="BusinessObjects\Enum.cs" />
+    <Compile Include="BusinessObjects\PO\PurchaseOrderAttachment.cs" />
+    <Compile Include="BusinessObjects\PO\PurchaseOrderDetails.cs" />
+    <Compile Include="BusinessObjects\PO\PurchaseOrderDetailView.cs" />
+    <Compile Include="BusinessObjects\PO\PurchaseOrderDetailView.Designer.cs">
+      <DependentUpon>PurchaseOrderDetailView.cs</DependentUpon>
+    </Compile>
+    <Compile Include="BusinessObjects\PO\PurchaseOrderDocTrail.cs" />
+    <Compile Include="BusinessObjects\PO\PurchaseOrders.cs" />
     <Compile Include="BusinessObjects\PR\PurchaseRequestAppStage.cs" />
     <Compile Include="BusinessObjects\PR\PurchaseRequestAppStatus.cs" />
     <Compile Include="BusinessObjects\PR\PurchaseRequestAttachment.cs" />
     <Compile Include="BusinessObjects\PR\PurchaseRequestDetails.cs" />
+    <Compile Include="BusinessObjects\PR\PurchaseRequestDetailView.cs" />
+    <Compile Include="BusinessObjects\PR\PurchaseRequestDetailView.Designer.cs">
+      <DependentUpon>PurchaseRequestDetailView.cs</DependentUpon>
+    </Compile>
     <Compile Include="BusinessObjects\PR\PurchaseRequestDocTrail.cs" />
     <Compile Include="BusinessObjects\PR\PurchaseRequests.cs" />
     <Compile Include="BusinessObjects\Setup\Approvals.cs" />
@@ -124,6 +136,7 @@
     <Compile Include="BusinessObjects\View\vwBusinessPartner.cs" />
     <Compile Include="BusinessObjects\View\vwDepartment.cs" />
     <Compile Include="BusinessObjects\View\vwItemMasters.cs" />
+    <Compile Include="BusinessObjects\View\vwPaymentTerm.cs" />
     <Compile Include="BusinessObjects\View\vwTax.cs" />
     <Compile Include="BusinessObjects\View\vwWarehouse.cs" />
     <Compile Include="Controllers\GeneralControllers.cs">
@@ -160,9 +173,7 @@
   <ItemGroup>
     <None Include="Welcome.html" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="BusinessObjects\PO\" />
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

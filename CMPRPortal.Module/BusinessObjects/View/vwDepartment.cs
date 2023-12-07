@@ -67,6 +67,14 @@ namespace CMPRPortal.Module.BusinessObjects.View
             get; set;
         }
 
+        [XafDisplayName("EntityCompany")]
+        [Appearance("EntityCompany", Enabled = false)]
+        [Index(8)]
+        public string EntityCompany
+        {
+            get; set;
+        }
+
         [Index(30), VisibleInDetailView(false), VisibleInListView(false), VisibleInLookupListView(true)]
         public string BoFullName
         {

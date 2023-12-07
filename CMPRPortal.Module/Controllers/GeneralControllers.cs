@@ -2,6 +2,9 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using CMPRPortal.Module.BusinessObjects;
+using CMPRPortal.Module.BusinessObjects.Maintenance;
+using CMPRPortal.Module.BusinessObjects.Setup;
 using DevExpress.Data.Filtering;
 using DevExpress.ExpressApp;
 using DevExpress.ExpressApp.Actions;
@@ -62,6 +65,32 @@ namespace CMPRPortal.Module.Controllers
             options.Win.Caption = caption;
             options.Win.Type = WinMessageType.Flyout;
             Application.ShowViewStrategy.ShowMessage(options);
+        }
+
+        public string GenerateDocNum(DocTypeList doctype, IObjectSpace os, Entity entity)
+        {
+            string DocNum = null;
+
+            try
+            {
+                DocTypes snumber = os.FindObject<DocTypes>(CriteriaOperator.Parse("BoCode = ? and Entity.Oid = ?", doctype, entity.Oid));
+
+                if (DocNum == null)
+                {
+                    DocNum = snumber.Entity.EntityID + "-" + snumber.BoName + "-" + snumber.NextDocNum;
+                }
+
+                snumber.CurrectDocNum = snumber.NextDocNum;
+                snumber.NextDocNum = snumber.NextDocNum + 1;
+
+                os.CommitChanges();
+            }
+            catch (Exception)
+            {
+                return DocNum;
+            }
+
+            return DocNum;
         }
     }
 }
