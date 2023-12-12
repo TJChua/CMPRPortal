@@ -323,7 +323,7 @@ namespace CMPRPortal.Module.BusinessObjects.PO
         [XafDisplayName("Remarks")]
         [Size(254)]
         [Appearance("Remarks", Enabled = false)]
-        [Index(35), VisibleInDetailView(true), VisibleInListView(false), VisibleInLookupListView(false)]
+        [Index(35), VisibleInDetailView(true), VisibleInListView(true), VisibleInLookupListView(false)]
         public string Remarks
         {
             get { return _Remarks; }
@@ -340,6 +340,30 @@ namespace CMPRPortal.Module.BusinessObjects.PO
         {
             get { return _Entity; }
             set { SetPropertyValue("Entity", ref _Entity, value); }
+        }
+
+        private int _BaseDoc;
+        [XafDisplayName("BaseDoc")]
+        [Index(51), VisibleInListView(false), VisibleInDetailView(false), VisibleInLookupListView(false)]
+        public int BaseDoc
+        {
+            get { return _BaseDoc; }
+            set
+            {
+                SetPropertyValue("BaseDoc", ref _BaseDoc, value);
+            }
+        }
+
+        private int _BaseID;
+        [XafDisplayName("BaseID")]
+        [Index(52), VisibleInListView(false), VisibleInDetailView(false), VisibleInLookupListView(false)]
+        public int BaseID
+        {
+            get { return _BaseID; }
+            set
+            {
+                SetPropertyValue("BaseID", ref _BaseID, value);
+            }
         }
 
         private PurchaseOrders _PurchaseOrders;

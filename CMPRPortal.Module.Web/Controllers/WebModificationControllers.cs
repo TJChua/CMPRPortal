@@ -75,6 +75,14 @@ namespace CMPRPortal.Module.Web.Controllers
                 if (CurrObject.DocNum == null)
                 {
                     CurrObject.DocNum = genCon.GenerateDocNum(DocTypeList.PO, ObjectSpace, CurrObject.Entity);
+
+                    foreach (PurchaseOrderDetails dtl in CurrObject.PurchaseOrderDetails)
+                    {
+                        if (dtl.BaseDoc != 0)
+                        {
+                            genCon.UpdPR(dtl.BaseDoc, dtl.BaseID, "Create", ObjectSpace, dtl.Quantity);
+                        }
+                    }
                 }
 
                 base.Save(args);

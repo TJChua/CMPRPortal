@@ -62,6 +62,7 @@
     <Reference Include="DevExpress.ExpressApp.Validation.v20.2">
       <SpecificVersion>False</SpecificVersion>
     </Reference>
+    <Reference Include="DevExpress.ExpressApp.Web.v20.2, Version=20.2.5.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL" />
     <Reference Include="DevExpress.ExpressApp.Xpo.v20.2">
       <SpecificVersion>False</SpecificVersion>
     </Reference>
@@ -111,6 +112,8 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="BusinessObjects\Enum.cs" />
+    <Compile Include="BusinessObjects\GeneralSettings.cs" />
+    <Compile Include="BusinessObjects\NonPersistents.cs" />
     <Compile Include="BusinessObjects\PO\PurchaseOrderAttachment.cs" />
     <Compile Include="BusinessObjects\PO\PurchaseOrderDetails.cs" />
     <Compile Include="BusinessObjects\PO\PurchaseOrderDetailView.cs" />
@@ -129,6 +132,8 @@
     </Compile>
     <Compile Include="BusinessObjects\PR\PurchaseRequestDocTrail.cs" />
     <Compile Include="BusinessObjects\PR\PurchaseRequests.cs" />
+    <Compile Include="BusinessObjects\Search Screen\PRInquiry.cs" />
+    <Compile Include="BusinessObjects\Search Screen\PRInquiryDetails.cs" />
     <Compile Include="BusinessObjects\Setup\Approvals.cs" />
     <Compile Include="BusinessObjects\Setup\DocTypes.cs" />
     <Compile Include="BusinessObjects\Setup\Entity.cs" />
@@ -139,11 +144,45 @@
     <Compile Include="BusinessObjects\View\vwPaymentTerm.cs" />
     <Compile Include="BusinessObjects\View\vwTax.cs" />
     <Compile Include="BusinessObjects\View\vwWarehouse.cs" />
+    <Compile Include="Controllers\FilterControllers.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Controllers\FilterControllers.Designer.cs">
+      <DependentUpon>FilterControllers.cs</DependentUpon>
+    </Compile>
     <Compile Include="Controllers\GeneralControllers.cs">
       <SubType>Component</SubType>
     </Compile>
     <Compile Include="Controllers\GeneralControllers.Designer.cs">
       <DependentUpon>GeneralControllers.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Controllers\ListViewControllers.cs" />
+    <Compile Include="Controllers\ListViewControllers.Designer.cs">
+      <DependentUpon>ListViewControllers.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Controllers\NavigationControllers.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Controllers\NavigationControllers.Designer.cs">
+      <DependentUpon>NavigationControllers.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Controllers\PurchaseOrderControllers.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Controllers\PurchaseOrderControllers.Designer.cs">
+      <DependentUpon>PurchaseOrderControllers.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Controllers\PurchaseRequestControllers.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Controllers\PurchaseRequestControllers.Designer.cs">
+      <DependentUpon>PurchaseRequestControllers.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Controllers\SearchControllers.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Controllers\SearchControllers.Designer.cs">
+      <DependentUpon>SearchControllers.cs</DependentUpon>
     </Compile>
     <Compile Include="DatabaseUpdate\Updater.cs" />
     <Compile Include="Module.cs">
@@ -155,6 +194,18 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
+    <EmbeddedResource Include="Controllers\NavigationControllers.resx">
+      <DependentUpon>NavigationControllers.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Controllers\PurchaseOrderControllers.resx">
+      <DependentUpon>PurchaseOrderControllers.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Controllers\PurchaseRequestControllers.resx">
+      <DependentUpon>PurchaseRequestControllers.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Controllers\SearchControllers.resx">
+      <DependentUpon>SearchControllers.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Model.DesignedDiffs.xafml" />
     <EmbeddedResource Include="Properties\licenses.licx" />
   </ItemGroup>

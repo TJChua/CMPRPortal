@@ -31,7 +31,39 @@ namespace CMPRPortal.Web {
             security.RegisterXPOAdapterProviders();
             DevExpress.ExpressApp.Web.Templates.DefaultVerticalTemplateContentNew.ClearSizeLimit();
             WebApplication.Instance.SwitchToNewStyle();
-            if(ConfigurationManager.ConnectionStrings["ConnectionString"] != null) {
+
+            #region GeneralSettings
+            string temp = "";
+
+            temp = ConfigurationManager.AppSettings["EmailSend"].ToString();
+            CMPRPortal.Module.BusinessObjects.GeneralSettings.EmailSend = false;
+            if (temp.ToUpper() == "Y" || temp.ToUpper() == "YES" || temp.ToUpper() == "TRUE" || temp == "1")
+                CMPRPortal.Module.BusinessObjects.GeneralSettings.EmailSend = true;
+
+            CMPRPortal.Module.BusinessObjects.GeneralSettings.EmailHost = ConfigurationManager.AppSettings["EmailHost"].ToString();
+            CMPRPortal.Module.BusinessObjects.GeneralSettings.EmailHostDomain = ConfigurationManager.AppSettings["EmailHostDomain"].ToString();
+            CMPRPortal.Module.BusinessObjects.GeneralSettings.EmailPort = ConfigurationManager.AppSettings["EmailPort"].ToString();
+            CMPRPortal.Module.BusinessObjects.GeneralSettings.Email = ConfigurationManager.AppSettings["Email"].ToString();
+            CMPRPortal.Module.BusinessObjects.GeneralSettings.EmailPassword = ConfigurationManager.AppSettings["EmailPassword"].ToString();
+            CMPRPortal.Module.BusinessObjects.GeneralSettings.EmailName = ConfigurationManager.AppSettings["EmailName"].ToString();
+
+            temp = ConfigurationManager.AppSettings["EmailSSL"].ToString();
+            CMPRPortal.Module.BusinessObjects.GeneralSettings.EmailSSL = false;
+            if (temp.ToUpper() == "Y" || temp.ToUpper() == "YES" || temp.ToUpper() == "TRUE" || temp == "1")
+                CMPRPortal.Module.BusinessObjects.GeneralSettings.EmailSSL = true;
+
+            temp = ConfigurationManager.AppSettings["EmailUseDefaultCredential"].ToString();
+            CMPRPortal.Module.BusinessObjects.GeneralSettings.EmailUseDefaultCredential = false;
+            if (temp.ToUpper() == "Y" || temp.ToUpper() == "YES" || temp.ToUpper() == "TRUE" || temp == "1")
+                CMPRPortal.Module.BusinessObjects.GeneralSettings.EmailUseDefaultCredential = true;
+
+            CMPRPortal.Module.BusinessObjects.GeneralSettings.DeliveryMethod = ConfigurationManager.AppSettings["DeliveryMethod"].ToString();
+
+            CMPRPortal.Module.BusinessObjects.GeneralSettings.appurl = System.Web.HttpContext.Current.Request.Url.AbsoluteUri; // + requestManager.GetQueryString(shortcut)
+
+            #endregion
+
+            if (ConfigurationManager.ConnectionStrings["ConnectionString"] != null) {
                 WebApplication.Instance.ConnectionString = ConfigurationManager.ConnectionStrings["ConnectionString"].ConnectionString;
             }
 #if EASYTEST

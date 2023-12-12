@@ -91,7 +91,7 @@ namespace CMPRPortal.Module.BusinessObjects.PR
         [ImmediatePostData]
         [NoForeignKey]
         [XafDisplayName("Item Code")]
-        [DataSourceCriteria("frozenFor = 'N' and EntityCompany = '@this.Entity.CompanyName")]
+        [DataSourceCriteria("frozenFor = 'N' and EntityCompany = '@this.Entity.CompanyName'")]
         [LookupEditorMode(LookupEditorMode.AllItems)]
         [Index(0), VisibleInListView(true), VisibleInDetailView(true), VisibleInLookupListView(true)]
         [Appearance("ItemCode", Enabled = false, Criteria = "not IsNew")]

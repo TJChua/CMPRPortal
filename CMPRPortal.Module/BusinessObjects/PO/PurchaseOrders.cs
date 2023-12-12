@@ -20,6 +20,13 @@ namespace CMPRPortal.Module.BusinessObjects.PO
     [DefaultClassOptions]
     [XafDisplayName("Purchase Order")]
     [NavigationItem("Purchase Order")]
+    [Appearance("HideNew", AppearanceItemType = "Action", TargetItems = "New", Visibility = DevExpress.ExpressApp.Editors.ViewItemVisibility.Hide)]
+    [Appearance("HideEdit", AppearanceItemType.Action, "True", TargetItems = "SwitchToEditMode; Edit", Criteria = "not (Status in (0))", Visibility = DevExpress.ExpressApp.Editors.ViewItemVisibility.Hide, Context = "Any")]
+    [Appearance("HideDelete", AppearanceItemType.Action, "True", TargetItems = "Delete", Visibility = DevExpress.ExpressApp.Editors.ViewItemVisibility.Hide, Context = "Any")]
+    [Appearance("HideSubmit", AppearanceItemType.Action, "True", TargetItems = "SubmitPO", Criteria = "not (Status in (0))", Visibility = DevExpress.ExpressApp.Editors.ViewItemVisibility.Hide, Context = "Any")]
+    [Appearance("HideCancel", AppearanceItemType.Action, "True", TargetItems = "CancelPO", Criteria = "not (Status in (0))", Visibility = DevExpress.ExpressApp.Editors.ViewItemVisibility.Hide, Context = "Any")]
+
+    [Appearance("HidePRInquiry", AppearanceItemType.Action, "True", TargetItems = "PRInquiry", Criteria = "Supplier = null or DocNum = null", Visibility = DevExpress.ExpressApp.Editors.ViewItemVisibility.Hide, Context = "Any")]
 
     public class PurchaseOrders : XPObject
     { // Inherit from a different class to provide a custom primary key, concurrency and deletion behavior, etc. (https://documentation.devexpress.com/eXpressAppFramework/CustomDocument113146.aspx).
@@ -162,6 +169,7 @@ namespace CMPRPortal.Module.BusinessObjects.PO
         private Entity _Entity;
         [DataSourceCriteria("IsActive = 'True'")]
         [XafDisplayName("Entity")]
+        [Appearance("Entity", Enabled = false)]
         [LookupEditorMode(LookupEditorMode.AllItems)]
         [RuleRequiredField(DefaultContexts.Save)]
         [Index(8), VisibleInDetailView(true), VisibleInListView(true), VisibleInLookupListView(false)]
@@ -174,6 +182,7 @@ namespace CMPRPortal.Module.BusinessObjects.PO
         private vwDepartment _Department;
         [NoForeignKey]
         [XafDisplayName("Department")]
+        [Appearance("Department", Enabled = false)]
         [DataSourceCriteria("EntityCompany = '@this.Entity.CompanyName'")]
         [LookupEditorMode(LookupEditorMode.AllItems)]
         [RuleRequiredField(DefaultContexts.Save)]
@@ -192,6 +201,7 @@ namespace CMPRPortal.Module.BusinessObjects.PO
         [NoForeignKey]
         [ImmediatePostData]
         [LookupEditorMode(LookupEditorMode.AllItems)]
+        [RuleRequiredField(DefaultContexts.Save)]
         [DataSourceCriteria("ValidFor = 'Y' and EntityCompany = '@this.Entity.CompanyName'")]
         [Index(5), VisibleInDetailView(true), VisibleInListView(true), VisibleInLookupListView(false)]
         public vwBusinessPartner Supplier

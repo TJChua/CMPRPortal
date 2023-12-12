@@ -2,8 +2,10 @@
 <Application Title="CMPRPortal">
   <NavigationItems>
     <Items>
-      <Item Id="Default">
+      <Item Id="Default" Index="0">
         <Items>
+          <Item Id="PRInquiry_ListView" Removed="True" />
+          <Item Id="PRInquiryDetails_ListView" Removed="True" />
           <Item Id="PurchaseOrderAttachment_ListView" Removed="True" />
           <Item Id="PurchaseOrderDetails_ListView" Removed="True" />
           <Item Id="PurchaseOrderDocTrail_ListView" Removed="True" />
@@ -12,6 +14,12 @@
           <Item Id="PurchaseRequestAttachment_ListView" Removed="True" />
           <Item Id="PurchaseRequestDetails_ListView" Removed="True" />
           <Item Id="PurchaseRequestDocTrail_ListView" Removed="True" />
+        </Items>
+      </Item>
+      <Item Id="Purchase Request" Index="1" />
+      <Item Id="Purchase Order" Index="2">
+        <Items>
+          <Item Id="PRInquiry_ListView" Caption="Purchase Request Inquiry" ViewId="PRInquiry_ListView" Index="0" IsNewNode="True" />
         </Items>
       </Item>
     </Items>
@@ -23,6 +31,128 @@
     <SchemaModule Name="SystemModule" Version="20.2.5.0" IsNewNode="True" />
   </SchemaModules>
   <Views>
+    <DetailView Id="PermissionPolicyRole_DetailView" AllowEdit="True" />
+    <ListView Id="PermissionPolicyRole_Users_ListView" AllowDelete="True" />
+    <ListView Id="PermissionPolicyUser_Roles_ListView" AllowDelete="False" />
+    <DetailView Id="PRInquiry_DetailView" AllowEdit="True">
+      <Items>
+        <ActionContainerViewItem Id="SearchFunc" ActionContainer="ListView" Caption="SearchFunc" Orientation="Vertical" IsNewNode="True" />
+      </Items>
+      <Layout>
+        <LayoutGroup Id="Main" RelativeSize="100">
+          <LayoutGroup Id="SimpleEditors" RelativeSize="10.606060606060606">
+            <LayoutGroup Id="PRInquiry" Caption="PRInquiry" RelativeSize="100" Direction="Horizontal">
+              <LayoutItem Id="Entity" ViewItem="Entity" Index="0" RelativeSize="24.017467248908297" IsNewNode="True" Removed="True" />
+              <LayoutItem Id="Department" RelativeSize="23.362445414847162" />
+              <LayoutItem Id="ExpectedDeliveryDate" ViewItem="ExpectedDeliveryDate" Index="2" RelativeSize="23.362445414847162" IsNewNode="True" Removed="True" />
+              <LayoutItem Id="SearchFunc" ViewItem="SearchFunc" Index="3" RelativeSize="29.257641921397379" SizeConstraintsType="Default" MinSize="230, 40" IsNewNode="True" />
+            </LayoutGroup>
+          </LayoutGroup>
+          <LayoutGroup Id="PRInquiryDetails_Group" Direction="Vertical" RelativeSize="89.393939393939391" Index="1">
+            <LayoutItem Id="PRInquiryDetails" RelativeSize="100" />
+          </LayoutGroup>
+        </LayoutGroup>
+      </Layout>
+    </DetailView>
+    <DetailView Id="PRInquiry_DetailView_PO" CaptionColon=":" EnableCaptionColon="True" CaptionLocation="Default" CaptionHorizontalAlignment="Default" CaptionVerticalAlignment="Default" CaptionWordWrap="Default" EnableLayoutGroupImages="True" RequiredFieldMark="*" ClassName="CMPRPortal.Module.BusinessObjects.Search_Screen.PRInquiry" IsNewNode="True">
+      <Items IsNewNode="True">
+        <PropertyEditor Id="Department" PropertyName="Department" IsNewNode="True" />
+        <PropertyEditor Id="DocNum" PropertyName="DocNum" IsNewNode="True" />
+        <PropertyEditor Id="Entity" PropertyName="Entity" IsNewNode="True" />
+        <PropertyEditor Id="ExpectedDeliveryDate" PropertyName="ExpectedDeliveryDate" IsNewNode="True" />
+        <PropertyEditor Id="Oid" PropertyName="Oid" IsNewNode="True" />
+        <PropertyEditor Id="PRInquiryDetails" PropertyName="PRInquiryDetails" View="PRInquiry_PRInquiryDetails_ListView_PO" IsNewNode="True" />
+        <ActionContainerViewItem Id="SearchFunc" ActionContainer="ListView" Caption="SearchFunc" Orientation="Vertical" IsNewNode="True" />
+      </Items>
+      <Layout IsNewNode="True">
+        <LayoutGroup Id="Main" Index="0" ShowCaption="False" RelativeSize="100" IsNewNode="True">
+          <LayoutGroup Id="SimpleEditors" Index="0" ShowCaption="False" RelativeSize="10.606060606060606" IsNewNode="True">
+            <LayoutGroup Id="PRInquiry" Index="0" Direction="Horizontal" ShowCaption="False" RelativeSize="100" IsNewNode="True">
+              <LayoutItem Id="Entity" ViewItem="Entity" Index="0" RelativeSize="24.017467248908297" IsNewNode="True" />
+              <LayoutItem Id="Department" ViewItem="Department" ShowCaption="" Index="1" RelativeSize="23.362445414847162" IsNewNode="True" />
+              <LayoutItem Id="ExpectedDeliveryDate" ViewItem="ExpectedDeliveryDate" Index="2" RelativeSize="23.362445414847162" IsNewNode="True" />
+              <LayoutItem Id="SearchFunc" ViewItem="SearchFunc" Index="3" RelativeSize="29.257641921397379" SizeConstraintsType="Default" MinSize="230, 40" IsNewNode="True" />
+            </LayoutGroup>
+          </LayoutGroup>
+          <LayoutGroup Id="PRInquiryDetails_Group" Index="1" ShowCaption="True" RelativeSize="89.393939393939391" IsNewNode="True">
+            <LayoutItem Id="PRInquiryDetails" ViewItem="PRInquiryDetails" ShowCaption="" Index="0" RelativeSize="100" IsNewNode="True" />
+          </LayoutGroup>
+        </LayoutGroup>
+      </Layout>
+    </DetailView>
+    <ListView Id="PRInquiry_PRInquiryDetails_ListView">
+      <Columns>
+        <ColumnInfo Id="Oid" Width="58" />
+        <ColumnInfo Id="PRInquiry" Width="82" />
+        <ColumnInfo Id="Entity" Width="82" />
+        <ColumnInfo Id="Department" Width="82" />
+        <ColumnInfo Id="ExpectedDeliveryDate" Width="82" />
+        <ColumnInfo Id="BanquetOrderNo" Width="82" />
+        <ColumnInfo Id="EventDate" Width="82" />
+        <ColumnInfo Id="ItemCode" Width="147" SortIndex="-1" SortOrder="None" />
+        <ColumnInfo Id="ItemDesc" Width="82" />
+        <ColumnInfo Id="UOM" Width="82" />
+        <ColumnInfo Id="Quantity" Width="58" />
+      </Columns>
+    </ListView>
+    <ListView Id="PRInquiry_PRInquiryDetails_ListView_PO" ClassName="CMPRPortal.Module.BusinessObjects.Search_Screen.PRInquiryDetails" DetailViewID="PRInquiryDetails_DetailView_PO" MasterDetailView="PRInquiryDetails_DetailView" IsNewNode="True">
+      <Columns IsNewNode="True">
+        <ColumnInfo Id="BaseDoc" PropertyName="BaseDoc" Width="50" Index="-1" IsNewNode="True" />
+        <ColumnInfo Id="BaseID" PropertyName="BaseID" Width="50" Index="-1" IsNewNode="True" />
+        <ColumnInfo Id="Oid" PropertyName="Oid" Width="58" Index="-1" IsNewNode="True" />
+        <ColumnInfo Id="PRInquiry" PropertyName="PRInquiry" Width="82" Index="-1" IsNewNode="True" />
+        <ColumnInfo Id="UnitPrice" PropertyName="UnitPrice" Width="50" Index="-1" IsNewNode="True" />
+        <ColumnInfo Id="Entity" PropertyName="Entity" Width="82" Index="0" IsNewNode="True" />
+        <ColumnInfo Id="Department" PropertyName="Department" Width="82" Index="1" IsNewNode="True" />
+        <ColumnInfo Id="ExpectedDeliveryDate" PropertyName="ExpectedDeliveryDate" Width="82" Index="2" IsNewNode="True" />
+        <ColumnInfo Id="BanquetOrderNo" PropertyName="BanquetOrderNo" Width="82" Index="3" IsNewNode="True" />
+        <ColumnInfo Id="EventDate" PropertyName="EventDate" Width="82" Index="4" IsNewNode="True" />
+        <ColumnInfo Id="ItemCode" PropertyName="ItemCode" Width="147" Index="5" IsNewNode="True" />
+        <ColumnInfo Id="ItemDesc" PropertyName="ItemDesc" Width="82" Index="6" IsNewNode="True" />
+        <ColumnInfo Id="UOM" PropertyName="UOM" Width="82" Index="7" IsNewNode="True" />
+        <ColumnInfo Id="Quantity" PropertyName="Quantity" Width="58" Index="8" IsNewNode="True" />
+      </Columns>
+    </ListView>
+    <DetailView Id="PRInquiryDetails_DetailView" AllowEdit="False" />
+    <DetailView Id="PRInquiryDetails_DetailView_PO" CaptionColon=":" EnableCaptionColon="True" CaptionLocation="Default" CaptionHorizontalAlignment="Default" CaptionVerticalAlignment="Default" CaptionWordWrap="Default" EnableLayoutGroupImages="True" RequiredFieldMark="*" ClassName="CMPRPortal.Module.BusinessObjects.Search_Screen.PRInquiryDetails" AllowEdit="False" IsNewNode="True">
+      <Items IsNewNode="True">
+        <PropertyEditor Id="BanquetOrderNo" PropertyName="BanquetOrderNo" IsNewNode="True" />
+        <PropertyEditor Id="BaseDoc" PropertyName="BaseDoc" IsNewNode="True" />
+        <PropertyEditor Id="BaseID" PropertyName="BaseID" IsNewNode="True" />
+        <PropertyEditor Id="Department" PropertyName="Department" IsNewNode="True" />
+        <PropertyEditor Id="Entity" PropertyName="Entity" IsNewNode="True" />
+        <PropertyEditor Id="EventDate" PropertyName="EventDate" IsNewNode="True" />
+        <PropertyEditor Id="ExpectedDeliveryDate" PropertyName="ExpectedDeliveryDate" IsNewNode="True" />
+        <PropertyEditor Id="ItemCode" PropertyName="ItemCode" IsNewNode="True" />
+        <PropertyEditor Id="ItemDesc" PropertyName="ItemDesc" IsNewNode="True" />
+        <PropertyEditor Id="Oid" PropertyName="Oid" IsNewNode="True" />
+        <PropertyEditor Id="PRInquiry" PropertyName="PRInquiry" IsNewNode="True" />
+        <PropertyEditor Id="Quantity" PropertyName="Quantity" IsNewNode="True" />
+        <PropertyEditor Id="UnitPrice" PropertyName="UnitPrice" IsNewNode="True" />
+        <PropertyEditor Id="UOM" PropertyName="UOM" IsNewNode="True" />
+      </Items>
+      <Layout IsNewNode="True">
+        <LayoutGroup Id="Main" Index="0" ShowCaption="False" IsNewNode="True">
+          <LayoutGroup Id="SimpleEditors" Index="0" ShowCaption="False" IsNewNode="True">
+            <LayoutGroup Id="PRInquiryDetails" Index="0" Direction="Horizontal" ShowCaption="True" Caption="PRInquiry Details" IsNewNode="True">
+              <LayoutGroup Id="PRInquiryDetails_col1" Index="0" ShowCaption="False" IsNewNode="True">
+                <LayoutItem Id="Entity" ViewItem="Entity" ShowCaption="" Index="0" IsNewNode="True" />
+                <LayoutItem Id="Department" ViewItem="Department" ShowCaption="" Index="1" IsNewNode="True" />
+                <LayoutItem Id="ExpectedDeliveryDate" ViewItem="ExpectedDeliveryDate" ShowCaption="" Index="2" IsNewNode="True" />
+                <LayoutItem Id="BanquetOrderNo" ViewItem="BanquetOrderNo" ShowCaption="" Index="3" IsNewNode="True" />
+                <LayoutItem Id="EventDate" ViewItem="EventDate" ShowCaption="" Index="4" IsNewNode="True" />
+              </LayoutGroup>
+              <LayoutGroup Id="PRInquiryDetails_col2" Index="1" ShowCaption="False" IsNewNode="True">
+                <LayoutItem Id="ItemCode" ViewItem="ItemCode" ShowCaption="" Index="0" IsNewNode="True" />
+                <LayoutItem Id="ItemDesc" ViewItem="ItemDesc" ShowCaption="" Index="1" IsNewNode="True" />
+                <LayoutItem Id="UOM" ViewItem="UOM" ShowCaption="" Index="2" IsNewNode="True" />
+                <LayoutItem Id="Quantity" ViewItem="Quantity" ShowCaption="" Index="3" IsNewNode="True" />
+              </LayoutGroup>
+            </LayoutGroup>
+          </LayoutGroup>
+        </LayoutGroup>
+      </Layout>
+    </DetailView>
     <DetailView Id="PurchaseOrderDetails_DetailView">
       <Layout>
         <LayoutGroup Id="Main" RelativeSize="100">
@@ -230,5 +360,34 @@
         </LayoutGroup>
       </Layout>
     </DetailView>
+    <DetailView Id="SystemUsers_DetailView">
+      <Layout>
+        <LayoutGroup Id="Main" RelativeSize="100">
+          <LayoutGroup Id="SimpleEditors" RelativeSize="39.770554493307841">
+            <LayoutGroup Id="SystemUsers" RelativeSize="69.230769230769226">
+              <LayoutItem Id="UserName" ViewItem="UserName" Index="0" RelativeSize="25" IsNewNode="True" />
+              <LayoutItem Id="StaffEmail" RelativeSize="18.055555555555557" Index="1" />
+              <LayoutItem Id="StaffName" RelativeSize="18.055555555555557" Index="2" />
+              <LayoutItem Id="DefaultEntity" Index="3" RelativeSize="18.055555555555557" />
+              <LayoutItem Id="DefaultDept" Index="4" RelativeSize="20.833333333333332" />
+            </LayoutGroup>
+            <LayoutGroup Id="PermissionPolicyUser" RelativeSize="30.76923076923077">
+              <LayoutItem Id="ChangePasswordOnFirstLogon" RelativeSize="46.875" />
+              <LayoutItem Id="IsActive" RelativeSize="53.125" Index="1" />
+              <LayoutItem Id="UserName" RelativeSize="28.888888888888889" Removed="True" />
+            </LayoutGroup>
+          </LayoutGroup>
+          <LayoutGroup Id="Roles_Group" Direction="Vertical" RelativeSize="60.229445506692159">
+            <LayoutItem Id="Roles" RelativeSize="100" />
+          </LayoutGroup>
+        </LayoutGroup>
+      </Layout>
+    </DetailView>
+    <DetailView Id="vwBusinessPartner_DetailView" AllowEdit="False" />
+    <DetailView Id="vwDepartment_DetailView" AllowEdit="False" />
+    <DetailView Id="vwItemMasters_DetailView" AllowEdit="False" />
+    <DetailView Id="vwPaymentTerm_DetailView" AllowEdit="False" />
+    <DetailView Id="vwTax_DetailView" AllowEdit="False" />
+    <DetailView Id="vwWarehouse_DetailView" AllowEdit="False" />
   </Views>
 </Application>

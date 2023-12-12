@@ -37,4 +37,11 @@ namespace CMPRPortal.Module.BusinessObjects
         Required_Approval = 2,
         Rejected = 3
     }
+
+    public enum ApprovalActions
+    {
+        [XafDisplayName("Please Select Action...")] NA = 0,
+        [XafDisplayName("Yes")] Yes = 1,
+        [XafDisplayName("No")] No = 2
+    }
 }

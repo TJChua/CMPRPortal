@@ -21,6 +21,10 @@ namespace CMPRPortal.Module.BusinessObjects.PR
     [DefaultClassOptions]
     [XafDisplayName("Purchase Request")]
     [NavigationItem("Purchase Request")]
+    [Appearance("HideEdit", AppearanceItemType.Action, "True", TargetItems = "SwitchToEditMode; Edit", Criteria = "not (Status in (0))", Visibility = DevExpress.ExpressApp.Editors.ViewItemVisibility.Hide, Context = "Any")]
+    [Appearance("HideDelete", AppearanceItemType.Action, "True", TargetItems = "Delete", Visibility = DevExpress.ExpressApp.Editors.ViewItemVisibility.Hide, Context = "Any")]
+    [Appearance("HideSubmit", AppearanceItemType.Action, "True", TargetItems = "SubmitPR", Criteria = "not (Status in (0))", Visibility = DevExpress.ExpressApp.Editors.ViewItemVisibility.Hide, Context = "Any")]
+    [Appearance("HideCancel", AppearanceItemType.Action, "True", TargetItems = "CancelPR", Criteria = "not (Status in (0))", Visibility = DevExpress.ExpressApp.Editors.ViewItemVisibility.Hide, Context = "Any")]
 
     public class PurchaseRequests : XPObject
     { // Inherit from a different class to provide a custom primary key, concurrency and deletion behavior, etc. (https://documentation.devexpress.com/eXpressAppFramework/CustomDocument113146.aspx).
@@ -165,6 +169,7 @@ namespace CMPRPortal.Module.BusinessObjects.PR
         private Entity _Entity;
         [DataSourceCriteria("IsActive = 'True'")]
         [XafDisplayName("Entity")]
+        [Appearance("Entity", Enabled = false)]
         [LookupEditorMode(LookupEditorMode.AllItems)]
         [RuleRequiredField(DefaultContexts.Save)]
         [Index(8), VisibleInDetailView(true), VisibleInListView(true), VisibleInLookupListView(false)]
@@ -177,6 +182,7 @@ namespace CMPRPortal.Module.BusinessObjects.PR
         private vwDepartment _Department;
         [NoForeignKey]
         [XafDisplayName("Department")]
+        [Appearance("Department", Enabled = false)]
         [DataSourceCriteria("EntityCompany = '@this.Entity.CompanyName'")]
         [LookupEditorMode(LookupEditorMode.AllItems)]
         [RuleRequiredField(DefaultContexts.Save)]
