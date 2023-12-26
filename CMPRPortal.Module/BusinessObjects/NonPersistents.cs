@@ -13,7 +13,8 @@ using DevExpress.Persistent.BaseImpl;
 using DevExpress.Persistent.Validation;
 using DevExpress.ExpressApp.ConditionalAppearance;
 
-namespace CMPRPortal.Module.BusinessObjects {
+namespace CMPRPortal.Module.BusinessObjects
+{
     [DomainComponent]
     [NonPersistent]
     [XafDisplayName("Confirmation")]
@@ -36,10 +37,8 @@ namespace CMPRPortal.Module.BusinessObjects {
         public bool IsErr { get; set; }
     }
 
-    [DomainComponent]
     [NonPersistent]
     [XafDisplayName("Approval")]
-    [RuleCriteria("ApprovalRemarks", DefaultContexts.Save, "IsValid = 0", "Please fill in reason.")]
     public class ApprovalParameters : XPObject
     { // Inherit from a different class to provide a custom primary key, concurrency and deletion behavior, etc. (https://documentation.devexpress.com/eXpressAppFramework/CustomDocument113146.aspx).
         public ApprovalParameters(Session session)

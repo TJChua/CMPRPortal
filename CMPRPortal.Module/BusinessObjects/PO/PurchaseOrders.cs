@@ -14,6 +14,7 @@ using DevExpress.Persistent.Validation;
 using DevExpress.ExpressApp.ConditionalAppearance;
 using CMPRPortal.Module.BusinessObjects.View;
 using CMPRPortal.Module.BusinessObjects.Maintenance;
+using CMPRPortal.Module.BusinessObjects.Setup;
 
 namespace CMPRPortal.Module.BusinessObjects.PO
 {
@@ -47,6 +48,8 @@ namespace CMPRPortal.Module.BusinessObjects.PO
                 if (user.DefaultEntity != null)
                 {
                     Entity = Session.FindObject<Entity>(new BinaryOperator("Oid", user.DefaultEntity.Oid));
+                    DocType = Session.FindObject<DocTypes>(CriteriaOperator.Parse("BoCode = ? and Entity.Oid = ?  and IsActive = ?",
+                        DocTypeList.PO, user.DefaultEntity.Oid, "True"));
                 }
                 if (user.DefaultDept != null)
                 {
@@ -57,7 +60,6 @@ namespace CMPRPortal.Module.BusinessObjects.PO
             DocDate = DateTime.Now;
             ExpectedDeliveryDate = DateTime.Now;
 
-            DocType = DocTypeList.PO;
             Status = DocStatus.Draft;
         }
 
@@ -113,12 +115,12 @@ namespace CMPRPortal.Module.BusinessObjects.PO
             }
         }
 
-        private DocTypeList _DocType;
+        private DocTypes _DocType;
         [XafDisplayName("Doc Type"), ToolTip("Enter Text")]
         [Appearance("DocType", Enabled = false, Criteria = "not IsNew")]
         [RuleRequiredField(DefaultContexts.Save)]
         [Index(304), VisibleInListView(false), VisibleInDetailView(false), VisibleInLookupListView(false)]
-        public DocTypeList DocType
+        public DocTypes DocType
         {
             get { return _DocType; }
             set

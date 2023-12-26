@@ -68,5 +68,19 @@ namespace CMPRPortal.Module.BusinessObjects {
             get { return _DefaultEntity; }
             set { SetPropertyValue("DefaultEntity", ref _DefaultEntity, value); }
         }
+
+        [Association("SystemUsers-SystemUsersEntity")]
+        [XafDisplayName("Multiple Entity")]
+        public XPCollection<SystemUsersEntity> SystemUsersEntity
+        {
+            get { return GetCollection<SystemUsersEntity>("SystemUsersEntity"); }
+        }
+
+        [Association("SystemUsers-SystemUsersDepartment")]
+        [XafDisplayName("Multiple Department")]
+        public XPCollection<SystemUsersDepartment> SystemUsersDepartment
+        {
+            get { return GetCollection<SystemUsersDepartment>("SystemUsersDepartment"); }
+        }
     }
 }

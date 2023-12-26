@@ -4,6 +4,7 @@
     <Items>
       <Item Id="Default" Index="0">
         <Items>
+          <Item Id="ApprovalUsers_ListView" Removed="True" />
           <Item Id="PRInquiry_ListView" Removed="True" />
           <Item Id="PRInquiryDetails_ListView" Removed="True" />
           <Item Id="PurchaseOrderAttachment_ListView" Removed="True" />
@@ -14,9 +15,18 @@
           <Item Id="PurchaseRequestAttachment_ListView" Removed="True" />
           <Item Id="PurchaseRequestDetails_ListView" Removed="True" />
           <Item Id="PurchaseRequestDocTrail_ListView" Removed="True" />
+          <Item Id="SystemUsersDepartment_ListView" Removed="True" />
+          <Item Id="SystemUsersEntity_ListView" Removed="True" />
         </Items>
       </Item>
-      <Item Id="Purchase Request" Index="1" />
+      <Item Id="Purchase Request" Index="1">
+        <Items>
+          <Item Id="PurchaseRequests_ListView" Index="0" />
+          <Item Id="Purchase Request Pending Approval" Caption="Purchase Request Pending Approval" ViewId="PurchaseRequests_ListView_PendApp" Index="1" IsNewNode="True" />
+          <Item Id="Purchase Request Escalate" Index="2" Caption="Purchase Request Escalate" ViewId="PurchaseRequests_ListView_Escalate" IsNewNode="True" />
+          <Item Id="Purchase Request Approved" Caption="Purchase Request Approved" Index="3" ViewId="PurchaseRequests_ListView_Approved" IsNewNode="True" />
+        </Items>
+      </Item>
       <Item Id="Purchase Order" Index="2">
         <Items>
           <Item Id="PRInquiry_ListView" Caption="Purchase Request Inquiry" ViewId="PRInquiry_ListView" Index="0" IsNewNode="True" />
@@ -31,6 +41,42 @@
     <SchemaModule Name="SystemModule" Version="20.2.5.0" IsNewNode="True" />
   </SchemaModules>
   <Views>
+    <DetailView Id="Approvals_DetailView">
+      <Layout>
+        <LayoutGroup Id="Main" RelativeSize="100">
+          <LayoutGroup Id="SimpleEditors" RelativeSize="40.993788819875775">
+            <LayoutGroup Id="Approvals" RelativeSize="100">
+              <LayoutGroup Id="Approvals_col1" RelativeSize="49.928876244665716">
+                <LayoutItem Id="BoCode" RelativeSize="24" />
+                <LayoutItem Id="BoName" RelativeSize="17.333333333333332" />
+                <LayoutItem Id="Entity" ViewItem="Entity" Index="2" RelativeSize="17.333333333333332" IsNewNode="True" />
+                <LayoutItem Id="Department" ViewItem="Department" Index="3" RelativeSize="17.333333333333332" IsNewNode="True" />
+                <LayoutItem Id="DocType" Index="4" RelativeSize="24" />
+                <LayoutItem Id="ApprovalCnt" Index="5" RelativeSize="20.454545454545453" Removed="True" />
+                <LayoutItem Id="AppType" Index="5" RelativeSize="20.454545454545453" Removed="True" />
+              </LayoutGroup>
+              <LayoutGroup Id="Approvals_col2" RelativeSize="50.071123755334284">
+                <LayoutItem Id="AppType" ViewItem="AppType" Index="0" RelativeSize="24" IsNewNode="True" />
+                <LayoutItem Id="ApprovalCnt" ViewItem="ApprovalCnt" Index="1" RelativeSize="17.333333333333332" IsNewNode="True" />
+                <LayoutItem Id="ApprovalLevel" RelativeSize="17.333333333333332" Index="2" />
+                <LayoutItem Id="Department" Index="2" RelativeSize="17.333333333333332" Removed="True" />
+                <LayoutItem Id="DocAmount" Index="3" RelativeSize="17.333333333333332" />
+                <LayoutItem Id="IsActive" Index="4" RelativeSize="24" />
+                <LayoutItem Id="Entity" Removed="True" />
+              </LayoutGroup>
+            </LayoutGroup>
+          </LayoutGroup>
+          <TabbedGroup Id="Tabs" RelativeSize="59.006211180124225">
+            <LayoutGroup Id="ApprovalUsers" RelativeSize="100">
+              <LayoutItem Id="ApprovalUsers" RelativeSize="100" />
+            </LayoutGroup>
+            <LayoutGroup Id="AuditTrail" RelativeSize="100">
+              <LayoutItem Id="AuditTrail" RelativeSize="100" />
+            </LayoutGroup>
+          </TabbedGroup>
+        </LayoutGroup>
+      </Layout>
+    </DetailView>
     <DetailView Id="PermissionPolicyRole_DetailView" AllowEdit="True" />
     <ListView Id="PermissionPolicyRole_Users_ListView" AllowDelete="True" />
     <ListView Id="PermissionPolicyUser_Roles_ListView" AllowDelete="False" />
@@ -360,26 +406,322 @@
         </LayoutGroup>
       </Layout>
     </DetailView>
+    <DetailView Id="PurchaseRequests_DetailView_Approved" CaptionColon=":" EnableCaptionColon="True" CaptionLocation="Default" CaptionHorizontalAlignment="Default" CaptionVerticalAlignment="Default" CaptionWordWrap="Default" EnableLayoutGroupImages="True" RequiredFieldMark="*" ClassName="CMPRPortal.Module.BusinessObjects.PR.PurchaseRequests" Caption="Purchase Request Approved" IsNewNode="True">
+      <Items IsNewNode="True">
+        <PropertyEditor Id="AppStatus" PropertyName="AppStatus" IsNewNode="True" />
+        <PropertyEditor Id="AuditTrail" PropertyName="AuditTrail" View="PurchaseRequests_AuditTrail_ListView" IsNewNode="True" />
+        <PropertyEditor Id="BanquetOrderNo" PropertyName="BanquetOrderNo" IsNewNode="True" />
+        <PropertyEditor Id="CreateDate" PropertyName="CreateDate" IsNewNode="True" />
+        <PropertyEditor Id="CreateUser" PropertyName="CreateUser" IsNewNode="True" />
+        <PropertyEditor Id="Department" PropertyName="Department" IsNewNode="True" />
+        <PropertyEditor Id="DocDate" PropertyName="DocDate" IsNewNode="True" />
+        <PropertyEditor Id="DocNum" PropertyName="DocNum" IsNewNode="True" />
+        <PropertyEditor Id="DocType" PropertyName="DocType" IsNewNode="True" />
+        <PropertyEditor Id="Entity" PropertyName="Entity" IsNewNode="True" />
+        <PropertyEditor Id="EventDate" PropertyName="EventDate" IsNewNode="True" />
+        <PropertyEditor Id="ExpectedDeliveryDate" PropertyName="ExpectedDeliveryDate" IsNewNode="True" />
+        <PropertyEditor Id="NextApprover" PropertyName="NextApprover" IsNewNode="True" />
+        <PropertyEditor Id="Oid" PropertyName="Oid" IsNewNode="True" />
+        <PropertyEditor Id="PurchaseRequestAppStage" PropertyName="PurchaseRequestAppStage" View="PurchaseRequests_PurchaseRequestAppStage_ListView" IsNewNode="True" />
+        <PropertyEditor Id="PurchaseRequestAppStatus" PropertyName="PurchaseRequestAppStatus" View="PurchaseRequests_PurchaseRequestAppStatus_ListView" IsNewNode="True" />
+        <PropertyEditor Id="PurchaseRequestAttachment" PropertyName="PurchaseRequestAttachment" View="PurchaseRequests_PurchaseRequestAttachment_ListView" IsNewNode="True" />
+        <PropertyEditor Id="PurchaseRequestDetails" PropertyName="PurchaseRequestDetails" View="PurchaseRequests_PurchaseRequestDetails_ListView" IsNewNode="True" />
+        <PropertyEditor Id="PurchaseRequestDocTrail" PropertyName="PurchaseRequestDocTrail" View="PurchaseRequests_PurchaseRequestDocTrail_ListView" IsNewNode="True" />
+        <PropertyEditor Id="Remarks" PropertyName="Remarks" RowCount="3" IsNewNode="True" />
+        <PropertyEditor Id="Status" PropertyName="Status" IsNewNode="True" />
+        <PropertyEditor Id="UpdateDate" PropertyName="UpdateDate" IsNewNode="True" />
+        <PropertyEditor Id="UpdateUser" PropertyName="UpdateUser" IsNewNode="True" />
+        <PropertyEditor Id="UserID" PropertyName="UserID" IsNewNode="True" />
+        <PropertyEditor Id="UserName" PropertyName="UserName" IsNewNode="True" />
+        <PropertyEditor Id="WhoApprove" PropertyName="WhoApprove" IsNewNode="True" />
+      </Items>
+      <Layout IsNewNode="True">
+        <LayoutGroup Id="Main" Index="0" ShowCaption="False" RelativeSize="100" IsNewNode="True">
+          <LayoutGroup Id="SimpleEditors" Index="0" Direction="Horizontal" ShowCaption="False" RelativeSize="41.407867494824018" IsNewNode="True">
+            <LayoutGroup Id="PurchaseRequests_col1" ShowCaption="False" Index="0" RelativeSize="50" IsNewNode="True">
+              <LayoutItem Id="UserID" ViewItem="UserID" Index="0" RelativeSize="18" IsNewNode="True" />
+              <LayoutItem Id="UserName" ViewItem="UserName" Index="1" RelativeSize="13" IsNewNode="True" />
+              <LayoutItem Id="Entity" ViewItem="Entity" Index="2" RelativeSize="13" IsNewNode="True" />
+              <LayoutItem Id="Department" ViewItem="Department" Index="3" RelativeSize="56" IsNewNode="True" />
+            </LayoutGroup>
+            <LayoutGroup Id="PurchaseRequests_col2" ShowCaption="False" Index="1" RelativeSize="50" IsNewNode="True">
+              <LayoutItem Id="DocNum" ViewItem="DocNum" Index="0" RelativeSize="18" IsNewNode="True" />
+              <LayoutItem Id="DocDate" ViewItem="DocDate" Index="1" RelativeSize="13" IsNewNode="True" />
+              <LayoutItem Id="ExpectedDeliveryDate" ViewItem="ExpectedDeliveryDate" Index="2" RelativeSize="13" IsNewNode="True" />
+              <LayoutItem Id="EventDate" ViewItem="EventDate" Index="3" RelativeSize="13" IsNewNode="True" />
+              <LayoutItem Id="Status" ViewItem="Status" Index="4" RelativeSize="13" IsNewNode="True" />
+              <LayoutItem Id="AppStatus" ViewItem="AppStatus" Index="5" RelativeSize="13" IsNewNode="True" />
+              <LayoutItem Id="BanquetOrderNo" ViewItem="BanquetOrderNo" Index="6" RelativeSize="17" IsNewNode="True" />
+            </LayoutGroup>
+          </LayoutGroup>
+          <TabbedGroup Id="Tabs" Index="1" RelativeSize="51.138716356107658" IsNewNode="True">
+            <LayoutGroup Id="PurchaseRequestDetails" Index="0" ShowCaption="True" RelativeSize="100" IsNewNode="True">
+              <LayoutItem Id="PurchaseRequestDetails" ViewItem="PurchaseRequestDetails" ShowCaption="False" Index="0" RelativeSize="100" IsNewNode="True" />
+            </LayoutGroup>
+            <LayoutGroup Id="PurchaseRequestDocTrail" Index="1" ShowCaption="True" RelativeSize="100" IsNewNode="True">
+              <LayoutItem Id="PurchaseRequestDocTrail" ViewItem="PurchaseRequestDocTrail" ShowCaption="False" Index="0" RelativeSize="100" IsNewNode="True" />
+            </LayoutGroup>
+            <LayoutGroup Id="PurchaseRequestAppStage" Index="2" ShowCaption="True" RelativeSize="100" IsNewNode="True">
+              <LayoutItem Id="PurchaseRequestAppStage" ViewItem="PurchaseRequestAppStage" ShowCaption="False" Index="0" RelativeSize="100" IsNewNode="True" />
+            </LayoutGroup>
+            <LayoutGroup Id="PurchaseRequestAppStatus" Index="3" ShowCaption="True" RelativeSize="100" IsNewNode="True">
+              <LayoutItem Id="PurchaseRequestAppStatus" ViewItem="PurchaseRequestAppStatus" ShowCaption="False" Index="0" RelativeSize="100" IsNewNode="True" />
+            </LayoutGroup>
+            <LayoutGroup Id="PurchaseRequestAttachment" Index="4" ShowCaption="True" RelativeSize="100" IsNewNode="True">
+              <LayoutItem Id="PurchaseRequestAttachment" ViewItem="PurchaseRequestAttachment" ShowCaption="False" Index="0" RelativeSize="100" IsNewNode="True" />
+            </LayoutGroup>
+            <LayoutGroup Id="AuditTrail" Index="5" ShowCaption="True" RelativeSize="100" IsNewNode="True">
+              <LayoutItem Id="AuditTrail" ViewItem="AuditTrail" ShowCaption="False" Index="0" RelativeSize="100" IsNewNode="True" />
+            </LayoutGroup>
+          </TabbedGroup>
+          <LayoutItem Id="Remarks" ViewItem="Remarks" Index="2" RelativeSize="7.4534161490683228" IsNewNode="True" />
+        </LayoutGroup>
+      </Layout>
+    </DetailView>
+    <DetailView Id="PurchaseRequests_DetailView_Escalate" CaptionColon=":" EnableCaptionColon="True" CaptionLocation="Default" CaptionHorizontalAlignment="Default" CaptionVerticalAlignment="Default" CaptionWordWrap="Default" EnableLayoutGroupImages="True" RequiredFieldMark="*" ClassName="CMPRPortal.Module.BusinessObjects.PR.PurchaseRequests" IsNewNode="True">
+      <Items IsNewNode="True">
+        <PropertyEditor Id="AppStatus" PropertyName="AppStatus" IsNewNode="True" />
+        <PropertyEditor Id="AuditTrail" PropertyName="AuditTrail" View="PurchaseRequests_AuditTrail_ListView" IsNewNode="True" />
+        <PropertyEditor Id="BanquetOrderNo" PropertyName="BanquetOrderNo" IsNewNode="True" />
+        <PropertyEditor Id="CreateDate" PropertyName="CreateDate" IsNewNode="True" />
+        <PropertyEditor Id="CreateUser" PropertyName="CreateUser" IsNewNode="True" />
+        <PropertyEditor Id="Department" PropertyName="Department" IsNewNode="True" />
+        <PropertyEditor Id="DocDate" PropertyName="DocDate" IsNewNode="True" />
+        <PropertyEditor Id="DocNum" PropertyName="DocNum" IsNewNode="True" />
+        <PropertyEditor Id="DocType" PropertyName="DocType" IsNewNode="True" />
+        <PropertyEditor Id="Entity" PropertyName="Entity" IsNewNode="True" />
+        <PropertyEditor Id="EventDate" PropertyName="EventDate" IsNewNode="True" />
+        <PropertyEditor Id="ExpectedDeliveryDate" PropertyName="ExpectedDeliveryDate" IsNewNode="True" />
+        <PropertyEditor Id="NextApprover" PropertyName="NextApprover" IsNewNode="True" />
+        <PropertyEditor Id="Oid" PropertyName="Oid" IsNewNode="True" />
+        <PropertyEditor Id="PurchaseRequestAppStage" PropertyName="PurchaseRequestAppStage" View="PurchaseRequests_PurchaseRequestAppStage_ListView" IsNewNode="True" />
+        <PropertyEditor Id="PurchaseRequestAppStatus" PropertyName="PurchaseRequestAppStatus" View="PurchaseRequests_PurchaseRequestAppStatus_ListView" IsNewNode="True" />
+        <PropertyEditor Id="PurchaseRequestAttachment" PropertyName="PurchaseRequestAttachment" View="PurchaseRequests_PurchaseRequestAttachment_ListView" IsNewNode="True" />
+        <PropertyEditor Id="PurchaseRequestDetails" PropertyName="PurchaseRequestDetails" View="PurchaseRequests_PurchaseRequestDetails_ListView" IsNewNode="True" />
+        <PropertyEditor Id="PurchaseRequestDocTrail" PropertyName="PurchaseRequestDocTrail" View="PurchaseRequests_PurchaseRequestDocTrail_ListView" IsNewNode="True" />
+        <PropertyEditor Id="Remarks" PropertyName="Remarks" RowCount="3" IsNewNode="True" />
+        <PropertyEditor Id="Status" PropertyName="Status" IsNewNode="True" />
+        <PropertyEditor Id="UpdateDate" PropertyName="UpdateDate" IsNewNode="True" />
+        <PropertyEditor Id="UpdateUser" PropertyName="UpdateUser" IsNewNode="True" />
+        <PropertyEditor Id="UserID" PropertyName="UserID" IsNewNode="True" />
+        <PropertyEditor Id="UserName" PropertyName="UserName" IsNewNode="True" />
+        <PropertyEditor Id="WhoApprove" PropertyName="WhoApprove" IsNewNode="True" />
+      </Items>
+      <Layout IsNewNode="True">
+        <LayoutGroup Id="Main" Index="0" ShowCaption="False" RelativeSize="100" IsNewNode="True">
+          <LayoutGroup Id="SimpleEditors" Index="0" Direction="Horizontal" ShowCaption="False" RelativeSize="41.407867494824018" IsNewNode="True">
+            <LayoutGroup Id="PurchaseRequests_col1" ShowCaption="False" Index="0" RelativeSize="50" IsNewNode="True">
+              <LayoutItem Id="UserID" ViewItem="UserID" Index="0" RelativeSize="18" IsNewNode="True" />
+              <LayoutItem Id="UserName" ViewItem="UserName" Index="1" RelativeSize="13" IsNewNode="True" />
+              <LayoutItem Id="Entity" ViewItem="Entity" Index="2" RelativeSize="13" IsNewNode="True" />
+              <LayoutItem Id="Department" ViewItem="Department" Index="3" RelativeSize="56" IsNewNode="True" />
+            </LayoutGroup>
+            <LayoutGroup Id="PurchaseRequests_col2" ShowCaption="False" Index="1" RelativeSize="50" IsNewNode="True">
+              <LayoutItem Id="DocNum" ViewItem="DocNum" Index="0" RelativeSize="18" IsNewNode="True" />
+              <LayoutItem Id="DocDate" ViewItem="DocDate" Index="1" RelativeSize="13" IsNewNode="True" />
+              <LayoutItem Id="ExpectedDeliveryDate" ViewItem="ExpectedDeliveryDate" Index="2" RelativeSize="13" IsNewNode="True" />
+              <LayoutItem Id="EventDate" ViewItem="EventDate" Index="3" RelativeSize="13" IsNewNode="True" />
+              <LayoutItem Id="Status" ViewItem="Status" Index="4" RelativeSize="13" IsNewNode="True" />
+              <LayoutItem Id="AppStatus" ViewItem="AppStatus" Index="5" RelativeSize="13" IsNewNode="True" />
+              <LayoutItem Id="BanquetOrderNo" ViewItem="BanquetOrderNo" Index="6" RelativeSize="17" IsNewNode="True" />
+            </LayoutGroup>
+          </LayoutGroup>
+          <TabbedGroup Id="Tabs" Index="1" RelativeSize="51.138716356107658" IsNewNode="True">
+            <LayoutGroup Id="PurchaseRequestDetails" Index="0" ShowCaption="True" RelativeSize="100" IsNewNode="True">
+              <LayoutItem Id="PurchaseRequestDetails" ViewItem="PurchaseRequestDetails" ShowCaption="False" Index="0" RelativeSize="100" IsNewNode="True" />
+            </LayoutGroup>
+            <LayoutGroup Id="PurchaseRequestDocTrail" Index="1" ShowCaption="True" RelativeSize="100" IsNewNode="True">
+              <LayoutItem Id="PurchaseRequestDocTrail" ViewItem="PurchaseRequestDocTrail" ShowCaption="False" Index="0" RelativeSize="100" IsNewNode="True" />
+            </LayoutGroup>
+            <LayoutGroup Id="PurchaseRequestAppStage" Index="2" ShowCaption="True" RelativeSize="100" IsNewNode="True">
+              <LayoutItem Id="PurchaseRequestAppStage" ViewItem="PurchaseRequestAppStage" ShowCaption="False" Index="0" RelativeSize="100" IsNewNode="True" />
+            </LayoutGroup>
+            <LayoutGroup Id="PurchaseRequestAppStatus" Index="3" ShowCaption="True" RelativeSize="100" IsNewNode="True">
+              <LayoutItem Id="PurchaseRequestAppStatus" ViewItem="PurchaseRequestAppStatus" ShowCaption="False" Index="0" RelativeSize="100" IsNewNode="True" />
+            </LayoutGroup>
+            <LayoutGroup Id="PurchaseRequestAttachment" Index="4" ShowCaption="True" RelativeSize="100" IsNewNode="True">
+              <LayoutItem Id="PurchaseRequestAttachment" ViewItem="PurchaseRequestAttachment" ShowCaption="False" Index="0" RelativeSize="100" IsNewNode="True" />
+            </LayoutGroup>
+            <LayoutGroup Id="AuditTrail" Index="5" ShowCaption="True" RelativeSize="100" IsNewNode="True">
+              <LayoutItem Id="AuditTrail" ViewItem="AuditTrail" ShowCaption="False" Index="0" RelativeSize="100" IsNewNode="True" />
+            </LayoutGroup>
+          </TabbedGroup>
+          <LayoutItem Id="Remarks" ViewItem="Remarks" Index="2" RelativeSize="7.4534161490683228" IsNewNode="True" />
+        </LayoutGroup>
+      </Layout>
+    </DetailView>
+    <DetailView Id="PurchaseRequests_DetailView_PendApp" CaptionColon=":" EnableCaptionColon="True" CaptionLocation="Default" CaptionHorizontalAlignment="Default" CaptionVerticalAlignment="Default" CaptionWordWrap="Default" EnableLayoutGroupImages="True" RequiredFieldMark="*" ClassName="CMPRPortal.Module.BusinessObjects.PR.PurchaseRequests" Caption="Purchase Request Approval" IsNewNode="True">
+      <Items IsNewNode="True">
+        <PropertyEditor Id="AppStatus" PropertyName="AppStatus" IsNewNode="True" />
+        <PropertyEditor Id="AuditTrail" PropertyName="AuditTrail" View="PurchaseRequests_AuditTrail_ListView" IsNewNode="True" />
+        <PropertyEditor Id="BanquetOrderNo" PropertyName="BanquetOrderNo" IsNewNode="True" />
+        <PropertyEditor Id="CreateDate" PropertyName="CreateDate" IsNewNode="True" />
+        <PropertyEditor Id="CreateUser" PropertyName="CreateUser" IsNewNode="True" />
+        <PropertyEditor Id="Department" PropertyName="Department" IsNewNode="True" />
+        <PropertyEditor Id="DocDate" PropertyName="DocDate" IsNewNode="True" />
+        <PropertyEditor Id="DocNum" PropertyName="DocNum" IsNewNode="True" />
+        <PropertyEditor Id="DocType" PropertyName="DocType" IsNewNode="True" />
+        <PropertyEditor Id="Entity" PropertyName="Entity" IsNewNode="True" />
+        <PropertyEditor Id="EventDate" PropertyName="EventDate" IsNewNode="True" />
+        <PropertyEditor Id="ExpectedDeliveryDate" PropertyName="ExpectedDeliveryDate" IsNewNode="True" />
+        <PropertyEditor Id="NextApprover" PropertyName="NextApprover" IsNewNode="True" />
+        <PropertyEditor Id="Oid" PropertyName="Oid" IsNewNode="True" />
+        <PropertyEditor Id="PurchaseRequestAppStage" PropertyName="PurchaseRequestAppStage" View="PurchaseRequests_PurchaseRequestAppStage_ListView" IsNewNode="True" />
+        <PropertyEditor Id="PurchaseRequestAppStatus" PropertyName="PurchaseRequestAppStatus" View="PurchaseRequests_PurchaseRequestAppStatus_ListView" IsNewNode="True" />
+        <PropertyEditor Id="PurchaseRequestAttachment" PropertyName="PurchaseRequestAttachment" View="PurchaseRequests_PurchaseRequestAttachment_ListView" IsNewNode="True" />
+        <PropertyEditor Id="PurchaseRequestDetails" PropertyName="PurchaseRequestDetails" View="PurchaseRequests_PurchaseRequestDetails_ListView" IsNewNode="True" />
+        <PropertyEditor Id="PurchaseRequestDocTrail" PropertyName="PurchaseRequestDocTrail" View="PurchaseRequests_PurchaseRequestDocTrail_ListView" IsNewNode="True" />
+        <PropertyEditor Id="Remarks" PropertyName="Remarks" RowCount="3" IsNewNode="True" />
+        <PropertyEditor Id="Status" PropertyName="Status" IsNewNode="True" />
+        <PropertyEditor Id="UpdateDate" PropertyName="UpdateDate" IsNewNode="True" />
+        <PropertyEditor Id="UpdateUser" PropertyName="UpdateUser" IsNewNode="True" />
+        <PropertyEditor Id="UserID" PropertyName="UserID" IsNewNode="True" />
+        <PropertyEditor Id="UserName" PropertyName="UserName" IsNewNode="True" />
+        <PropertyEditor Id="WhoApprove" PropertyName="WhoApprove" IsNewNode="True" />
+      </Items>
+      <Layout IsNewNode="True">
+        <LayoutGroup Id="Main" Index="0" ShowCaption="False" RelativeSize="100" IsNewNode="True">
+          <LayoutGroup Id="SimpleEditors" Index="0" Direction="Horizontal" ShowCaption="False" RelativeSize="41.407867494824018" IsNewNode="True">
+            <LayoutGroup Id="PurchaseRequests_col1" ShowCaption="False" Index="0" RelativeSize="50" IsNewNode="True">
+              <LayoutItem Id="UserID" ViewItem="UserID" Index="0" RelativeSize="18" IsNewNode="True" />
+              <LayoutItem Id="UserName" ViewItem="UserName" Index="1" RelativeSize="13" IsNewNode="True" />
+              <LayoutItem Id="Entity" ViewItem="Entity" Index="2" RelativeSize="13" IsNewNode="True" />
+              <LayoutItem Id="Department" ViewItem="Department" Index="3" RelativeSize="56" IsNewNode="True" />
+            </LayoutGroup>
+            <LayoutGroup Id="PurchaseRequests_col2" ShowCaption="False" Index="1" RelativeSize="50" IsNewNode="True">
+              <LayoutItem Id="DocNum" ViewItem="DocNum" Index="0" RelativeSize="18" IsNewNode="True" />
+              <LayoutItem Id="DocDate" ViewItem="DocDate" Index="1" RelativeSize="13" IsNewNode="True" />
+              <LayoutItem Id="ExpectedDeliveryDate" ViewItem="ExpectedDeliveryDate" Index="2" RelativeSize="13" IsNewNode="True" />
+              <LayoutItem Id="EventDate" ViewItem="EventDate" Index="3" RelativeSize="13" IsNewNode="True" />
+              <LayoutItem Id="Status" ViewItem="Status" Index="4" RelativeSize="13" IsNewNode="True" />
+              <LayoutItem Id="AppStatus" ViewItem="AppStatus" Index="5" RelativeSize="13" IsNewNode="True" />
+              <LayoutItem Id="BanquetOrderNo" ViewItem="BanquetOrderNo" Index="6" RelativeSize="17" IsNewNode="True" />
+            </LayoutGroup>
+          </LayoutGroup>
+          <TabbedGroup Id="Tabs" Index="1" RelativeSize="51.138716356107658" IsNewNode="True">
+            <LayoutGroup Id="PurchaseRequestDetails" Index="0" ShowCaption="True" RelativeSize="100" IsNewNode="True">
+              <LayoutItem Id="PurchaseRequestDetails" ViewItem="PurchaseRequestDetails" ShowCaption="False" Index="0" RelativeSize="100" IsNewNode="True" />
+            </LayoutGroup>
+            <LayoutGroup Id="PurchaseRequestDocTrail" Index="1" ShowCaption="True" RelativeSize="100" IsNewNode="True">
+              <LayoutItem Id="PurchaseRequestDocTrail" ViewItem="PurchaseRequestDocTrail" ShowCaption="False" Index="0" RelativeSize="100" IsNewNode="True" />
+            </LayoutGroup>
+            <LayoutGroup Id="PurchaseRequestAppStage" Index="2" ShowCaption="True" RelativeSize="100" IsNewNode="True">
+              <LayoutItem Id="PurchaseRequestAppStage" ViewItem="PurchaseRequestAppStage" ShowCaption="False" Index="0" RelativeSize="100" IsNewNode="True" />
+            </LayoutGroup>
+            <LayoutGroup Id="PurchaseRequestAppStatus" Index="3" ShowCaption="True" RelativeSize="100" IsNewNode="True">
+              <LayoutItem Id="PurchaseRequestAppStatus" ViewItem="PurchaseRequestAppStatus" ShowCaption="False" Index="0" RelativeSize="100" IsNewNode="True" />
+            </LayoutGroup>
+            <LayoutGroup Id="PurchaseRequestAttachment" Index="4" ShowCaption="True" RelativeSize="100" IsNewNode="True">
+              <LayoutItem Id="PurchaseRequestAttachment" ViewItem="PurchaseRequestAttachment" ShowCaption="False" Index="0" RelativeSize="100" IsNewNode="True" />
+            </LayoutGroup>
+            <LayoutGroup Id="AuditTrail" Index="5" ShowCaption="True" RelativeSize="100" IsNewNode="True">
+              <LayoutItem Id="AuditTrail" ViewItem="AuditTrail" ShowCaption="False" Index="0" RelativeSize="100" IsNewNode="True" />
+            </LayoutGroup>
+          </TabbedGroup>
+          <LayoutItem Id="Remarks" ViewItem="Remarks" Index="2" RelativeSize="7.4534161490683228" IsNewNode="True" />
+        </LayoutGroup>
+      </Layout>
+    </DetailView>
+    <ListView Id="PurchaseRequests_ListView_Approved" ClassName="CMPRPortal.Module.BusinessObjects.PR.PurchaseRequests" Caption="Purchase Request Approved" DetailViewID="PurchaseRequests_DetailView_Approved" MasterDetailView="PurchaseRequests_DetailView" IsNewNode="True">
+      <Columns IsNewNode="True">
+        <ColumnInfo Id="CreateDate" PropertyName="CreateDate" Width="70" Index="-1" IsNewNode="True" />
+        <ColumnInfo Id="CreateUser" PropertyName="CreateUser" Width="70" Index="-1" IsNewNode="True" />
+        <ColumnInfo Id="DocType" PropertyName="DocType" Width="70" Index="-1" IsNewNode="True" />
+        <ColumnInfo Id="NextApprover" PropertyName="NextApprover" Width="70" Index="-1" IsNewNode="True" />
+        <ColumnInfo Id="Oid" PropertyName="Oid" Width="50" Index="-1" IsNewNode="True" />
+        <ColumnInfo Id="Remarks" PropertyName="Remarks" Width="70" Index="-1" IsNewNode="True" />
+        <ColumnInfo Id="UpdateDate" PropertyName="UpdateDate" Width="70" Index="-1" IsNewNode="True" />
+        <ColumnInfo Id="UpdateUser" PropertyName="UpdateUser" Width="70" Index="-1" IsNewNode="True" />
+        <ColumnInfo Id="WhoApprove" PropertyName="WhoApprove" Width="70" Index="-1" IsNewNode="True" />
+        <ColumnInfo Id="DocNum" PropertyName="DocNum" Width="70" Index="0" IsNewNode="True" />
+        <ColumnInfo Id="UserID" PropertyName="UserID" Width="70" Index="1" IsNewNode="True" />
+        <ColumnInfo Id="UserName" PropertyName="UserName" Width="400" SortIndex="0" SortOrder="Ascending" Index="2" IsNewNode="True" />
+        <ColumnInfo Id="Entity" PropertyName="Entity" Width="70" Index="3" IsNewNode="True" />
+        <ColumnInfo Id="Department" PropertyName="Department" Width="70" Index="4" IsNewNode="True" />
+        <ColumnInfo Id="DocDate" PropertyName="DocDate" Width="70" Index="5" IsNewNode="True" />
+        <ColumnInfo Id="ExpectedDeliveryDate" PropertyName="ExpectedDeliveryDate" Width="70" Index="6" IsNewNode="True" />
+        <ColumnInfo Id="EventDate" PropertyName="EventDate" Width="70" Index="7" IsNewNode="True" />
+        <ColumnInfo Id="Status" PropertyName="Status" Width="70" Index="8" IsNewNode="True" />
+        <ColumnInfo Id="AppStatus" PropertyName="AppStatus" Width="70" Index="9" IsNewNode="True" />
+        <ColumnInfo Id="BanquetOrderNo" PropertyName="BanquetOrderNo" Width="70" Index="10" IsNewNode="True" />
+      </Columns>
+    </ListView>
+    <ListView Id="PurchaseRequests_ListView_Escalate" ClassName="CMPRPortal.Module.BusinessObjects.PR.PurchaseRequests" Caption="PR Escalate" MasterDetailView="PurchaseRequests_DetailView" DetailViewID="PurchaseRequests_DetailView_Escalate" IsNewNode="True">
+      <Columns IsNewNode="True">
+        <ColumnInfo Id="CreateDate" PropertyName="CreateDate" Width="70" Index="-1" IsNewNode="True" />
+        <ColumnInfo Id="CreateUser" PropertyName="CreateUser" Width="70" Index="-1" IsNewNode="True" />
+        <ColumnInfo Id="DocType" PropertyName="DocType" Width="70" Index="-1" IsNewNode="True" />
+        <ColumnInfo Id="NextApprover" PropertyName="NextApprover" Width="70" Index="-1" IsNewNode="True" />
+        <ColumnInfo Id="Oid" PropertyName="Oid" Width="50" Index="-1" IsNewNode="True" />
+        <ColumnInfo Id="Remarks" PropertyName="Remarks" Width="70" Index="-1" IsNewNode="True" />
+        <ColumnInfo Id="UpdateDate" PropertyName="UpdateDate" Width="70" Index="-1" IsNewNode="True" />
+        <ColumnInfo Id="UpdateUser" PropertyName="UpdateUser" Width="70" Index="-1" IsNewNode="True" />
+        <ColumnInfo Id="WhoApprove" PropertyName="WhoApprove" Width="70" Index="-1" IsNewNode="True" />
+        <ColumnInfo Id="DocNum" PropertyName="DocNum" Width="70" Index="0" IsNewNode="True" />
+        <ColumnInfo Id="UserID" PropertyName="UserID" Width="70" Index="1" IsNewNode="True" />
+        <ColumnInfo Id="UserName" PropertyName="UserName" Width="400" SortIndex="0" SortOrder="Ascending" Index="2" IsNewNode="True" />
+        <ColumnInfo Id="Entity" PropertyName="Entity" Width="70" Index="3" IsNewNode="True" />
+        <ColumnInfo Id="Department" PropertyName="Department" Width="70" Index="4" IsNewNode="True" />
+        <ColumnInfo Id="DocDate" PropertyName="DocDate" Width="70" Index="5" IsNewNode="True" />
+        <ColumnInfo Id="ExpectedDeliveryDate" PropertyName="ExpectedDeliveryDate" Width="70" Index="6" IsNewNode="True" />
+        <ColumnInfo Id="EventDate" PropertyName="EventDate" Width="70" Index="7" IsNewNode="True" />
+        <ColumnInfo Id="Status" PropertyName="Status" Width="70" Index="8" IsNewNode="True" />
+        <ColumnInfo Id="AppStatus" PropertyName="AppStatus" Width="70" Index="9" IsNewNode="True" />
+        <ColumnInfo Id="BanquetOrderNo" PropertyName="BanquetOrderNo" Width="70" Index="10" IsNewNode="True" />
+      </Columns>
+    </ListView>
+    <ListView Id="PurchaseRequests_ListView_PendApp" ClassName="CMPRPortal.Module.BusinessObjects.PR.PurchaseRequests" Caption="Purchase Request Approval" DetailViewID="PurchaseRequests_DetailView_PendApp" MasterDetailView="PurchaseRequests_DetailView" IsNewNode="True">
+      <Columns IsNewNode="True">
+        <ColumnInfo Id="CreateDate" PropertyName="CreateDate" Width="70" Index="-1" IsNewNode="True" />
+        <ColumnInfo Id="CreateUser" PropertyName="CreateUser" Width="70" Index="-1" IsNewNode="True" />
+        <ColumnInfo Id="DocType" PropertyName="DocType" Width="70" Index="-1" IsNewNode="True" />
+        <ColumnInfo Id="NextApprover" PropertyName="NextApprover" Width="70" Index="-1" IsNewNode="True" />
+        <ColumnInfo Id="Oid" PropertyName="Oid" Width="50" Index="-1" IsNewNode="True" />
+        <ColumnInfo Id="Remarks" PropertyName="Remarks" Width="70" Index="-1" IsNewNode="True" />
+        <ColumnInfo Id="UpdateDate" PropertyName="UpdateDate" Width="70" Index="-1" IsNewNode="True" />
+        <ColumnInfo Id="UpdateUser" PropertyName="UpdateUser" Width="70" Index="-1" IsNewNode="True" />
+        <ColumnInfo Id="WhoApprove" PropertyName="WhoApprove" Width="70" Index="-1" IsNewNode="True" />
+        <ColumnInfo Id="DocNum" PropertyName="DocNum" Width="70" Index="0" IsNewNode="True" />
+        <ColumnInfo Id="UserID" PropertyName="UserID" Width="70" Index="1" IsNewNode="True" />
+        <ColumnInfo Id="UserName" PropertyName="UserName" Width="400" SortIndex="0" SortOrder="Ascending" Index="2" IsNewNode="True" />
+        <ColumnInfo Id="Entity" PropertyName="Entity" Width="70" Index="3" IsNewNode="True" />
+        <ColumnInfo Id="Department" PropertyName="Department" Width="70" Index="4" IsNewNode="True" />
+        <ColumnInfo Id="DocDate" PropertyName="DocDate" Width="70" Index="5" IsNewNode="True" />
+        <ColumnInfo Id="ExpectedDeliveryDate" PropertyName="ExpectedDeliveryDate" Width="70" Index="6" IsNewNode="True" />
+        <ColumnInfo Id="EventDate" PropertyName="EventDate" Width="70" Index="7" IsNewNode="True" />
+        <ColumnInfo Id="Status" PropertyName="Status" Width="70" Index="8" IsNewNode="True" />
+        <ColumnInfo Id="AppStatus" PropertyName="AppStatus" Width="70" Index="9" IsNewNode="True" />
+        <ColumnInfo Id="BanquetOrderNo" PropertyName="BanquetOrderNo" Width="70" Index="10" IsNewNode="True" />
+      </Columns>
+    </ListView>
     <DetailView Id="SystemUsers_DetailView">
       <Layout>
         <LayoutGroup Id="Main" RelativeSize="100">
-          <LayoutGroup Id="SimpleEditors" RelativeSize="39.770554493307841">
+          <LayoutGroup Id="SimpleEditors" RelativeSize="43.064182194616976">
             <LayoutGroup Id="SystemUsers" RelativeSize="69.230769230769226">
               <LayoutItem Id="UserName" ViewItem="UserName" Index="0" RelativeSize="25" IsNewNode="True" />
-              <LayoutItem Id="StaffEmail" RelativeSize="18.055555555555557" Index="1" />
-              <LayoutItem Id="StaffName" RelativeSize="18.055555555555557" Index="2" />
-              <LayoutItem Id="DefaultEntity" Index="3" RelativeSize="18.055555555555557" />
-              <LayoutItem Id="DefaultDept" Index="4" RelativeSize="20.833333333333332" />
+              <LayoutItem Id="StaffEmail" Index="1" RelativeSize="18.055555555555557" />
+              <LayoutItem Id="StaffName" Index="2" RelativeSize="18.055555555555557" />
+              <LayoutItem Id="DefaultDept" Index="3" RelativeSize="18.055555555555557" />
+              <LayoutItem Id="DefaultEntity" Index="4" RelativeSize="20.833333333333332" />
             </LayoutGroup>
             <LayoutGroup Id="PermissionPolicyUser" RelativeSize="30.76923076923077">
               <LayoutItem Id="ChangePasswordOnFirstLogon" RelativeSize="46.875" />
-              <LayoutItem Id="IsActive" RelativeSize="53.125" Index="1" />
-              <LayoutItem Id="UserName" RelativeSize="28.888888888888889" Removed="True" />
+              <LayoutItem Id="IsActive" Index="1" RelativeSize="53.125" />
+              <LayoutItem Id="UserName" Removed="True" />
             </LayoutGroup>
           </LayoutGroup>
-          <LayoutGroup Id="Roles_Group" Direction="Vertical" RelativeSize="60.229445506692159">
-            <LayoutItem Id="Roles" RelativeSize="100" />
-          </LayoutGroup>
+          <TabbedGroup Id="Tabs" RelativeSize="56.935817805383024">
+            <LayoutGroup Id="SystemUsersEntity" RelativeSize="100">
+              <LayoutItem Id="SystemUsersEntity" RelativeSize="100" />
+            </LayoutGroup>
+            <LayoutGroup Id="SystemUsersDepartment" RelativeSize="100">
+              <LayoutItem Id="SystemUsersDepartment" RelativeSize="100" />
+            </LayoutGroup>
+            <LayoutGroup Id="Roles" RelativeSize="100">
+              <LayoutItem Id="Roles" RelativeSize="100" />
+            </LayoutGroup>
+          </TabbedGroup>
         </LayoutGroup>
       </Layout>
     </DetailView>

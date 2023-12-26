@@ -14,6 +14,7 @@ using DevExpress.ExpressApp.SystemModule;
 using DevExpress.ExpressApp.Templates;
 using DevExpress.ExpressApp.Utils;
 using DevExpress.Persistent.Base;
+using DevExpress.Persistent.BaseImpl.PermissionPolicy;
 using DevExpress.Persistent.Validation;
 
 namespace CMPRPortal.Module.Controllers
@@ -38,6 +39,33 @@ namespace CMPRPortal.Module.Controllers
                 {
                     ((ListView)View).CollectionSource.Criteria["Filter1"] = CriteriaOperator.Parse("Entity.Oid = ? and Department.DepartmentCode = ?",
                         user.DefaultEntity.Oid, user.DefaultDept.DepartmentCode);
+                }
+            }
+
+            if (View.ObjectTypeInfo.Type == typeof(PurchaseRequests))
+            {
+                if (View.Id == "PurchaseRequests_ListView_PendApp")
+                {
+                    PermissionPolicyRole AppRole = ObjectSpace.FindObject<PermissionPolicyRole>(CriteriaOperator.Parse("IsCurrentUserInRole('ApprovalUserRole')"));
+
+                    if (AppRole != null)
+                    {
+                        ((ListView)View).CollectionSource.Criteria["Filter1"] = CriteriaOperator.Parse(" [AppStatus] = ? and Contains([NextApprover],?)", 2, user.StaffName);
+                    }
+                }
+            }
+
+            if (View.ObjectTypeInfo.Type == typeof(PurchaseRequests))
+            {
+                if (View.Id == "PurchaseRequests_ListView_Approved")
+                {
+                    PermissionPolicyRole AppRole = ObjectSpace.FindObject<PermissionPolicyRole>(CriteriaOperator.Parse("IsCurrentUserInRole('ApprovalUserRole')"));
+
+                    if (AppRole != null)
+                    {
+                        ((ListView)View).CollectionSource.Criteria["Filter1"] = CriteriaOperator.Parse("Contains([WhoApprove],?)", user.StaffName);
+
+                    }
                 }
             }
         }

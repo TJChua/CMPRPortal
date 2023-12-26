@@ -21,10 +21,24 @@ namespace CMPRPortal.Module.BusinessObjects.PR
     [DefaultClassOptions]
     [XafDisplayName("Purchase Request")]
     [NavigationItem("Purchase Request")]
+    [Appearance("HideNew", AppearanceItemType.Action, "True", TargetItems = "New", Visibility = DevExpress.ExpressApp.Editors.ViewItemVisibility.Hide, Context = "PurchaseRequests_ListView_PendApp")]
+    [Appearance("HideNew1", AppearanceItemType.Action, "True", TargetItems = "New", Visibility = DevExpress.ExpressApp.Editors.ViewItemVisibility.Hide, Context = "PurchaseRequests_ListView_Approved")]
+    [Appearance("HideNew2", AppearanceItemType.Action, "True", TargetItems = "New", Visibility = DevExpress.ExpressApp.Editors.ViewItemVisibility.Hide, Context = "PurchaseRequests_DetailView_PendApp")]
+    [Appearance("HideNew3", AppearanceItemType.Action, "True", TargetItems = "New", Visibility = DevExpress.ExpressApp.Editors.ViewItemVisibility.Hide, Context = "PurchaseRequests_DetailView_Approved")]
+    [Appearance("HideNew4", AppearanceItemType.Action, "True", TargetItems = "New", Visibility = DevExpress.ExpressApp.Editors.ViewItemVisibility.Hide, Context = "PurchaseRequests_ListView_Escalate")]
+    [Appearance("HideNew5", AppearanceItemType.Action, "True", TargetItems = "New", Visibility = DevExpress.ExpressApp.Editors.ViewItemVisibility.Hide, Context = "PurchaseRequests_DetailView_Escalate")]
+
     [Appearance("HideEdit", AppearanceItemType.Action, "True", TargetItems = "SwitchToEditMode; Edit", Criteria = "not (Status in (0))", Visibility = DevExpress.ExpressApp.Editors.ViewItemVisibility.Hide, Context = "Any")]
     [Appearance("HideDelete", AppearanceItemType.Action, "True", TargetItems = "Delete", Visibility = DevExpress.ExpressApp.Editors.ViewItemVisibility.Hide, Context = "Any")]
     [Appearance("HideSubmit", AppearanceItemType.Action, "True", TargetItems = "SubmitPR", Criteria = "not (Status in (0))", Visibility = DevExpress.ExpressApp.Editors.ViewItemVisibility.Hide, Context = "Any")]
     [Appearance("HideCancel", AppearanceItemType.Action, "True", TargetItems = "CancelPR", Criteria = "not (Status in (0))", Visibility = DevExpress.ExpressApp.Editors.ViewItemVisibility.Hide, Context = "Any")]
+
+    [Appearance("HideDup", AppearanceItemType.Action, "True", TargetItems = "DuplicatePR", Visibility = DevExpress.ExpressApp.Editors.ViewItemVisibility.Hide, Context = "PurchaseRequests_ListView_PendApp")]
+    [Appearance("HideDup1", AppearanceItemType.Action, "True", TargetItems = "DuplicatePR", Visibility = DevExpress.ExpressApp.Editors.ViewItemVisibility.Hide, Context = "PurchaseRequests_ListView_Approved")]
+    [Appearance("HideDup2", AppearanceItemType.Action, "True", TargetItems = "DuplicatePR", Visibility = DevExpress.ExpressApp.Editors.ViewItemVisibility.Hide, Context = "PurchaseRequests_DetailView_PendApp")]
+    [Appearance("HideDup3", AppearanceItemType.Action, "True", TargetItems = "DuplicatePR", Visibility = DevExpress.ExpressApp.Editors.ViewItemVisibility.Hide, Context = "PurchaseRequests_DetailView_Approved")]
+    [Appearance("HideDup4", AppearanceItemType.Action, "True", TargetItems = "DuplicatePR", Visibility = DevExpress.ExpressApp.Editors.ViewItemVisibility.Hide, Context = "PurchaseRequests_ListView_Escalate")]
+    [Appearance("HideDup5", AppearanceItemType.Action, "True", TargetItems = "DuplicatePR", Visibility = DevExpress.ExpressApp.Editors.ViewItemVisibility.Hide, Context = "PurchaseRequests_DetailView_Escalate")]
 
     public class PurchaseRequests : XPObject
     { // Inherit from a different class to provide a custom primary key, concurrency and deletion behavior, etc. (https://documentation.devexpress.com/eXpressAppFramework/CustomDocument113146.aspx).
@@ -45,6 +59,8 @@ namespace CMPRPortal.Module.BusinessObjects.PR
                 if (user.DefaultEntity != null)
                 {
                     Entity = Session.FindObject<Entity>(new BinaryOperator("Oid", user.DefaultEntity.Oid));
+                    DocType = Session.FindObject<DocTypes>(CriteriaOperator.Parse("BoCode = ? and Entity.Oid = ?  and IsActive = ?",
+                    DocTypeList.PR, user.DefaultEntity.Oid, "True"));
                 }
                 if (user.DefaultDept != null)
                 {
@@ -56,7 +72,6 @@ namespace CMPRPortal.Module.BusinessObjects.PR
             ExpectedDeliveryDate = DateTime.Now;
             EventDate = DateTime.Now;
 
-            DocType = DocTypeList.PR;
             Status = DocStatus.Draft;
             AppStatus = ApprovalStatusType.Not_Applicable;
         }
@@ -113,12 +128,12 @@ namespace CMPRPortal.Module.BusinessObjects.PR
             }
         }
 
-        private DocTypeList _DocType;
+        private DocTypes _DocType;
         [XafDisplayName("Doc Type"), ToolTip("Enter Text")]
         [Appearance("DocType", Enabled = false, Criteria = "not IsNew")]
         [RuleRequiredField(DefaultContexts.Save)]
         [Index(304), VisibleInListView(false), VisibleInDetailView(false), VisibleInLookupListView(false)]
-        public DocTypeList DocType
+        public DocTypes DocType
         {
             get { return _DocType; }
             set
@@ -260,7 +275,6 @@ namespace CMPRPortal.Module.BusinessObjects.PR
 
         private string _BanquetOrderNo;
         [XafDisplayName("Banquet Order No")]
-        [Appearance("BanquetOrderNo", Enabled = false)]
         [Index(25), VisibleInDetailView(true), VisibleInListView(true), VisibleInLookupListView(false)]
         public string BanquetOrderNo
         {
@@ -281,6 +295,34 @@ namespace CMPRPortal.Module.BusinessObjects.PR
             set
             {
                 SetPropertyValue("Remarks", ref _Remarks, value);
+            }
+        }
+
+        private string _NextApprover;
+        [XafDisplayName("Next Approver")]
+        //[ModelDefault("EditMask", "(000)-00"), VisibleInListView(false)]
+        [Index(82), VisibleInListView(false), VisibleInDetailView(false), VisibleInLookupListView(false)]
+        [Appearance("Next Approver", Enabled = false)]
+        public string NextApprover
+        {
+            get { return _NextApprover; }
+            set
+            {
+                SetPropertyValue("NextApprover", ref _NextApprover, value);
+            }
+        }
+
+        private string _WhoApprove;
+        [XafDisplayName("WhoApprove")]
+        //[ModelDefault("EditMask", "(000)-00"), VisibleInListView(false)]
+        [Index(83), VisibleInListView(false), VisibleInDetailView(false), VisibleInLookupListView(false)]
+        [Appearance("WhoApprove", Enabled = false)]
+        public string WhoApprove
+        {
+            get { return _WhoApprove; }
+            set
+            {
+                SetPropertyValue("WhoApprove", ref _WhoApprove, value);
             }
         }
 

@@ -27,7 +27,8 @@ namespace CMPRPortal.Module.BusinessObjects
         [XafDisplayName("Cancelled")] Cancelled = 2,
         [XafDisplayName("Closed")] Closed = 3,
         [XafDisplayName("Pending Post")] PendPost = 4,
-        [XafDisplayName("Posted")] Post = 5
+        [XafDisplayName("Posted")] Post = 5,
+        [XafDisplayName("Rejected")] Rejected = 6
     }
 
     public enum ApprovalStatusType
@@ -43,5 +44,10 @@ namespace CMPRPortal.Module.BusinessObjects
         [XafDisplayName("Please Select Action...")] NA = 0,
         [XafDisplayName("Yes")] Yes = 1,
         [XafDisplayName("No")] No = 2
+    }
+
+    public enum ApprovalTypes
+    {
+        Document = 0
     }
 }
