@@ -161,6 +161,14 @@ namespace CMPRPortal.Module.Controllers
             ObjectSpace.CommitChanges();
             ObjectSpace.Refresh();
 
+            foreach (PurchaseOrderDetails dtl in selectedObject.PurchaseOrderDetails)
+            {
+                if (dtl.BaseDoc != 0)
+                {
+                    genCon.UpdPR(dtl.BaseDoc, dtl.BaseID, "Submit", ObjectSpace, dtl.Quantity);
+                }
+            }
+
             IObjectSpace pos = Application.CreateObjectSpace();
             PurchaseOrders ptrx = pos.FindObject<PurchaseOrders>(new BinaryOperator("Oid", selectedObject.Oid));
             openNewView(pos, ptrx, ViewEditMode.View);

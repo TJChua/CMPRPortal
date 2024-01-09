@@ -176,6 +176,14 @@ namespace CMPRPortal.Module.Controllers
                             dtl.OpenQty = dtl.OpenQty + quantity;
                         }
                     }
+
+                    if (Action == "Submit")
+                    {
+                        if (dtl.Oid == PRbody)
+                        {
+                            dtl.OpenQty = dtl.Quantity - quantity;
+                        }
+                    }
                 }
             }
 
